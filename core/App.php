@@ -15,7 +15,13 @@ class App
 
   public function run(string $requestURI)
   {
-    Route::dispatch($requestURI);
+    $filePath = implode(DIRECTORY_SEPARATOR, [$_SERVER['DOCUMENT_ROOT'], $requestURI]);
+
+    if (file_exists($filePath)) {
+      echo file_get_contents($filePath);
+    } else {
+      Route::dispatch($requestURI);
+    }
   }
 
   public function load()
