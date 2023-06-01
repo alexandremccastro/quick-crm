@@ -4,6 +4,9 @@ use App\Controllers\AuthController;
 use App\Controllers\CustomerController;
 use Core\Routing\Route;
 
+Route::get('/', function () {
+  redirect('/login');
+});
 
 Route::post('/login', [AuthController::class, 'login']);
 
