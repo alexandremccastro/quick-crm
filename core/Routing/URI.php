@@ -11,7 +11,7 @@ class URI
     public function __construct(
         private string $path,
         private mixed $clazz,
-        private string $method,
+        private mixed $method,
         private Method $allowedMethod
     ) {
         $this->regex = $this->createRegex($path);
@@ -83,9 +83,12 @@ class URI
         try {
             $params = $this->getParams($path);
 
-            $clazz = new $this->clazz();
-
-            call_user_func_array([$clazz, $this->method], $params);
+            if ($this->clazz) {
+                $clazz = new $this->clazz();
+                call_user_func_array([$clazz, $this->method], $params);
+            } else {
+                call_user_func($this->method, $params);
+            }
         } catch (Exception $e) {
             echo $e->getMessage();
         }

@@ -8,39 +8,47 @@ abstract class Route
 {
     private static array $uris = [];
 
-    public static function post(string $uri, array $action)
+    public static function post(string $path, array $action)
     {
-        [$clazz, $method] = $action;
-
-        self::$uris[] = new URI($uri, $clazz, $method, Method::POST);
+        self::registerURI($path, $action, Method::POST);
     }
 
-    public static function get(string $uri, array $action)
+    public static function get(string $path, mixed $action)
     {
-        [$clazz, $method] = $action;
-
-        self::$uris[] = new URI($uri, $clazz, $method, Method::GET);
+        self::registerURI($path, $action, Method::GET);
     }
 
-    public static function put(string $uri, array $action)
+    public static function put(string $path, mixed $action)
     {
-        [$clazz, $method] = $action;
-
-        self::$uris[] = new URI($uri, $clazz, $method, Method::PUT);
+        self::registerURI($path, $action, Method::PUT);
     }
 
-    public static function patch(string $uri, array $action)
+    public static function patch(string $path, mixed $action)
     {
-        [$clazz, $method] = $action;
-
-        self::$uris[] = new URI($uri, $clazz, $method, Method::PATCH);
+        self::registerURI($path, $action, Method::PATCH);
     }
 
-    public static function delete(string $uri, array $action)
+    public static function delete(string $path, mixed $action)
     {
-        [$clazz, $method] = $action;
+        self::registerURI($path, $action, Method::DELETE);
+    }
 
-        self::$uris[] = new URI($uri, $clazz, $method, Method::DELETE);
+    /**
+     * Creates a new URI instance and stores in local variable
+     * 
+     * @param $path The path of the URI
+     * @param $action The action the will execute when user hits this URI
+     * @param $method The request method allowed to access this path
+     */
+    private static function registerURI(string $path, mixed $action, Method $method)
+    {
+        if (is_array($action)) {
+            [$clazz, $method] = $action;
+
+            self::$uris[] = new URI($path, $clazz, $method, $method);
+        } else {
+            self::$uris[] = new URI($path, null, $action, $method);
+        }
     }
 
 
