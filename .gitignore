@@ -1,2 +1,7 @@
-# Folders and files
+# Folders and editor files
 /vendor/
+
+
+# Config files
+.env*
+!.env.example
