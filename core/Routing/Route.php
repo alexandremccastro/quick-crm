@@ -40,14 +40,14 @@ abstract class Route
      * @param $action The action the will execute when user hits this URI
      * @param $method The request method allowed to access this path
      */
-    private static function registerURI(string $path, mixed $action, Method $method)
+    private static function registerURI(string $path, mixed $action, Method $requestMethod)
     {
         if (is_array($action)) {
             [$clazz, $method] = $action;
 
-            self::$uris[] = new URI($path, $clazz, $method, $method);
+            self::$uris[] = new URI($path, $clazz, $method, $requestMethod);
         } else {
-            self::$uris[] = new URI($path, null, $action, $method);
+            self::$uris[] = new URI($path, null, $action, $requestMethod);
         }
     }
 
