@@ -2,7 +2,6 @@
 
 namespace Core;
 
-use Core\Env\Parser;
 use Core\Routing\Route;
 use Core\Scripts\Loader;
 
