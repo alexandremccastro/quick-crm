@@ -10,15 +10,17 @@ abstract class Loader
    * 
    * @param $folder The path that the files will be loaded
    */
-  public static function load(string $folder)
+  public static function load(array $folders)
   {
-    $files = scandir($folder);
+    foreach ($folders as $folder) {
+      $files = scandir($folder);
 
-    foreach ($files as $file) {
-      $filePath = implode('/', [$folder, $file]);
+      foreach ($files as $file) {
+        $filePath = implode('/', [$folder, $file]);
 
-      if (is_file($filePath)) {
-        require_once $filePath;
+        if (is_file($filePath)) {
+          require_once $filePath;
+        }
       }
     }
   }

@@ -19,6 +19,6 @@ class App
 
   public function load()
   {
-    Loader::load('routes');
+    Loader::load(['routes', 'helpers']);
   }
 }
