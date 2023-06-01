@@ -1,0 +1,1 @@
+<h1>This is the login page <?php echo $name ?></h1>

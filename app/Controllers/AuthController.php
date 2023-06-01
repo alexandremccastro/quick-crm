@@ -2,11 +2,16 @@
 
 namespace App\Controllers;
 
+use Core\View\View;
+
 class AuthController
 {
 
   public function login()
   {
-    echo 'logging in';
+    $name = 'Alexandre';
+    $company = 'Test';
+
+    view('auth.login', compact('name', 'company'));
   }
 }
