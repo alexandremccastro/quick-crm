@@ -6,13 +6,12 @@ abstract class DB
 {
   private static $instance = null;
 
-
   /**
    * Singletron method that ensures only one database connection across the app
    * 
    * @return \PDO A connection with the database
    */
-  public static function getInstance()
+  public static function db()
   {
     if (self::$instance == null) {
       self::$instance = new \PDO(self::getDNS(), self::getUser(), self::getPswd());
