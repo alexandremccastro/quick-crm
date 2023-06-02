@@ -1,6 +1,9 @@
-import { createApp } from "vue";
-import Test from "./components/Test.vue";
+import './index.scss'
 
-const app = createApp({});
-app.component("test", Test);
-app.mount("#app");
+import { createApp } from 'vue'
+
+import Test from './components/Test.vue'
+
+const app = createApp({})
+app.component('test', Test)
+app.mount('#app')
