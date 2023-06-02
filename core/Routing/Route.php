@@ -59,8 +59,10 @@ abstract class Route
      */
     public static function dispatch(string $path)
     {
-        $results = array_filter(self::$uris, function (URI $uri) use ($path) {
-            if ($uri->match($path)) return $uri;
+        $currentMethod = server()->requestMethod();
+
+        $results = array_filter(self::$uris, function (URI $uri) use ($path, $currentMethod) {
+            if ($uri->match($path) && $uri->getMethod() == $currentMethod) return $uri;
         });
 
         $uri = current($results);

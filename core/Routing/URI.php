@@ -93,4 +93,12 @@ class URI
             echo $e->getMessage();
         }
     }
+
+    /**
+     * @return string The allowed method for this URI
+     */
+    public function getMethod(): string
+    {
+        return $this->allowedMethod->value();
+    }
 }

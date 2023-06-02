@@ -8,7 +8,9 @@ Route::get('/', function () {
   redirect('/login');
 });
 
-Route::post('/login', [AuthController::class, 'login']);
+Route::get('/login', [AuthController::class, 'showLoginView']);
+Route::post('/login', [AuthController::class, 'attemptLogin']);
+Route::get('/register', [AuthController::class, 'register']);
 
 
 Route::get('/customers/{id}/edit', [CustomerController::class, 'show']);
