@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ['./resources/**/*.{vue,js}'],
+  content: ['./resources/**/*.{vue,js,php}'],
   plugins: [require('daisyui')],
   darkMode: false, // or 'media' or 'class'
   theme: {
