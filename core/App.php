@@ -18,7 +18,18 @@ class App
     $filePath = implode(DIRECTORY_SEPARATOR, [$_SERVER['DOCUMENT_ROOT'], $requestURI]);
 
     if (file_exists($filePath)) {
-      echo header('mime\type: text/javascript');
+      $extension = pathinfo($filePath, PATHINFO_EXTENSION);
+
+      $mimeTypes = [
+        'txt' => 'text/plain',
+        'css' => 'text/css',
+        'js' => 'application/javascript',
+        'pdf' => 'application/pdf',
+      ];
+
+      $contentType = $mimeTypes[$extension] ?? 'application/octet-stream';
+
+      echo header("Content-Type: $contentType");
       echo file_get_contents($filePath);
     } else {
       Route::dispatch($requestURI);
