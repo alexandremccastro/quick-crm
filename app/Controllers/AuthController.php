@@ -2,35 +2,65 @@
 
 namespace App\Controllers;
 
+use App\Models\User;
+use Exception;
+
 class AuthController
 {
 
   public function showLoginView()
   {
-    $name = 'Alexandre';
-    $company = 'Test';
-
-    view('auth.login', compact('name', 'company'));
+    view('auth.login');
   }
 
-
-  public function attemptLogin()
+  public function login()
   {
-    $name = 'Alexandre';
-    $company = 'Test';
+    try {
+      $data = request()->all();
 
-    $data = request()->all();
+      $user = new User();
+      $found = $user->findOne(['email', '=', $data['email']]);
 
-    var_dump($data);
+      // Not found or invalid credentials
+      if (!$found || !password_verify($data['password'], $found->password)) {
+        redirect('/login');
+      } else {
+        session()->set('user', $found);
+        redirect('/home');
+      }
+    } catch (Exception $e) {
+      echo $e->getMessage();
+    }
 
     // view('auth.login', compact('name', 'company'));
   }
 
+  public function showRegisterView()
+  {
+    view('auth.register');
+  }
+
   public function register()
   {
-    $name = 'Alexandre';
-    $company = 'Test';
+    try {
+      $data = request()->all();
 
-    view('auth.register', compact('name', 'company'));
+      $user = new User();
+
+      $data['password'] = password_hash($data['password'], PASSWORD_BCRYPT);
+
+      $user->insertOne($data);
+    } catch (Exception $e) {
+      echo $e->getMessage();
+    } finally {
+      redirect('/login');
+    }
+    // view('auth.login', compact('name', 'company'));
+  }
+
+  public function logout()
+  {
+    session()->destroy();
+    redirect('/login');
   }
 }

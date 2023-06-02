@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 
 <head>
   <meta charset="UTF-8" />
@@ -13,8 +13,8 @@
 </head>
 
 <body>
-  <main id="app">
-    <test name="Alexandre" />
+  <main class="bg-gray-100" id="app">
+    <Login name="Alexandre" />
   </main>
   <script type="module" src="/public/js/index.js"></script>
 </body>

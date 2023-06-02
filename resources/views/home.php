@@ -14,7 +14,7 @@
 
 <body>
   <main class="bg-gray-100" id="app">
-    <Register name="Alexandre" />
+    <Home name="Alexandre" />
   </main>
   <script type="module" src="/public/js/index.js"></script>
 </body>
