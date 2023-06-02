@@ -1,6 +1,8 @@
 <?php
 
 use Core\Env\Parser;
+use Core\Http\Request;
+use Core\Http\Server;
 use Core\View\View;
 
 /**
@@ -35,4 +37,21 @@ function view(string $path, array $params = [])
 function env(string $key)
 {
   return Parser::get($key);
+}
+
+/**
+ * Helper that allows access params of the current request
+ */
+function request(): Request
+{
+  return Request::getInstance();
+}
+
+
+/**
+ * Helper that allows access params of the server
+ */
+function server(): Server
+{
+  return Server::getInstance();
 }
