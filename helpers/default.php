@@ -3,6 +3,7 @@
 use Core\Env\Parser;
 use Core\Http\Request;
 use Core\Http\Server;
+use Core\Session\Session;
 use Core\View\View;
 
 /**
@@ -54,4 +55,25 @@ function request(): Request
 function server(): Server
 {
   return Server::getInstance();
+}
+
+/**
+ * App session helper
+ */
+function session(): Session
+{
+  return Session::getInstance();
+}
+
+/**
+ * Returns the data of the authenticated user
+ */
+function user(): mixed
+{
+  return Session::getInstance()->get('user');
+}
+
+function isAuthenticated(): bool
+{
+  return user() != null;
 }

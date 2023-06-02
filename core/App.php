@@ -11,6 +11,8 @@ class App
   public function __construct()
   {
     $this->load();
+
+    session()->start();
   }
 
   public function run(string $requestURI)
