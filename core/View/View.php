@@ -5,7 +5,7 @@ namespace Core\View;
 abstract class View
 {
 
-  private static $path = 'views';
+  private static $path = 'resources/views';
 
   public static function load(string $path, array $params = [])
   {
@@ -15,6 +15,6 @@ abstract class View
       $$key = $param;
     }
 
-    $data = include_once implode(DIRECTORY_SEPARATOR, [self::$path, ...$filePath]) . '.php';
+    include_once implode(DIRECTORY_SEPARATOR, [self::$path, ...$filePath]) . '.php';
   }
 }

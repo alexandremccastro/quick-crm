@@ -1,0 +1,17 @@
+{
+  "name": "quick-crm",
+  "version": "1.0.0",
+  "repository": "git@github.com:alexandremccastro/quick-crm.git",
+  "author": "Alexandre Castro <alexandrecotrimcastro@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "build": "vite build",
+    "watch": "vite watch"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^4.2.3",
+    "vite": "^4.3.9",
+    "vue": "^3.3.4",
+    "vue-loader": "^17.2.1"
+  }
+}

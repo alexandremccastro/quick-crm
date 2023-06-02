@@ -12,10 +12,6 @@ class AuthController
     $name = 'Alexandre';
     $company = 'Test';
 
-    $appName = env('APP_NAME');
-
-    echo $appName;
-
     view('auth.login', compact('name', 'company'));
   }
 }

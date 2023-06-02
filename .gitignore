@@ -1,6 +1,6 @@
 # Folders and editor files
 /vendor/
-
+/node_modules/
 
 # Config files
 .env*

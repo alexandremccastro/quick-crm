@@ -18,6 +18,7 @@ class App
     $filePath = implode(DIRECTORY_SEPARATOR, [$_SERVER['DOCUMENT_ROOT'], $requestURI]);
 
     if (file_exists($filePath)) {
+      echo header('mime\type: text/javascript');
       echo file_get_contents($filePath);
     } else {
       Route::dispatch($requestURI);
