@@ -3,6 +3,10 @@
 @tailwind utilities;
 
 
+* {
+  font-family: 'Roboto', sans-serif;
+}
+
 #app {
   height: 100vh;
 }

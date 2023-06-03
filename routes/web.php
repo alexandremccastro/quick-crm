@@ -17,4 +17,5 @@ Route::post('/register', [AuthController::class, 'register']);
 
 Route::get('/home', [HomeController::class, 'home']);
 
+Route::get('/customers', [CustomerController::class, 'index']);
 Route::get('/customers/{id}/edit', [CustomerController::class, 'show']);
