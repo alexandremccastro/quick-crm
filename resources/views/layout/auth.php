@@ -11,7 +11,7 @@
 </head>
 
 <body>
-  <main id="app">
+  <main class="bg-gray-100" id="app">
     @child
   </main>
 

@@ -15,4 +15,12 @@ final class Server
   {
     return $_SERVER['REQUEST_METHOD'];
   }
+
+  /**
+   * @return string The document root of index.php file
+   */
+  public static function documentRoot()
+  {
+    return $_SERVER['DOCUMENT_ROOT'];
+  }
 }

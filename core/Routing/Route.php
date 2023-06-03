@@ -3,6 +3,7 @@
 namespace Core\Routing;
 
 use Core\Routing\URI;
+use Exception;
 
 abstract class Route
 {
@@ -68,6 +69,46 @@ abstract class Route
         $uri = current($results);
 
         if ($uri) $uri->execute($path);
-        else throw new \Exception('Not found.', 404);
+        else if (self::isPublicPath($path))
+            self::serveFile($path);
+        else throw new Exception('Not found.', 404);
+    }
+
+    /**
+     * Checks if the URI is for public path
+     * 
+     * @param $path The path to be verified
+     * 
+     * @return bool True if is the public path, otherwise false
+     */
+    public static function isPublicPath($path)
+    {
+        return preg_match("/^\/public/", $path);
+    }
+
+    /**
+     * Displays the content of a file in public dir
+     * 
+     * @param $path The path of the file
+     */
+    public static function serveFile(string $path)
+    {
+        $filePath = implode(DIRECTORY_SEPARATOR, [server()->documentRoot(), $path]);
+
+        if (file_exists($filePath)) {
+            $extension = pathinfo($filePath, PATHINFO_EXTENSION);
+
+            $mimeTypes = [
+                'txt' => 'text/plain',
+                'css' => 'text/css',
+                'js' => 'application/javascript',
+                'pdf' => 'application/pdf',
+            ];
+
+            $contentType = $mimeTypes[$extension] ?? 'application/octet-stream';
+
+            echo header("Content-Type: $contentType");
+            echo file_get_contents($filePath);
+        }
     }
 }
