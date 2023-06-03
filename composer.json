@@ -18,5 +18,8 @@
       "name": "Alexandre Castro",
       "email": "alexandrecotrimcastro@gmail.com"
     }
-  ]
+  ],
+  "require-dev": {
+    "phpunit/phpunit": "^10"
+  }
 }

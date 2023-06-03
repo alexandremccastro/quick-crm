@@ -23,8 +23,10 @@ class AuthController
 
       // Not found or invalid credentials
       if (!$found || !password_verify($data['password'], $found->password)) {
+        echo 'Invalid credentials';
         redirect('/login');
       } else {
+        echo 'Logged in successfully';
         session()->set('user', $found);
         redirect('/home');
       }

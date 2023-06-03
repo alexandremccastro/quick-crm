@@ -60,11 +60,13 @@ abstract class Route
      */
     public static function dispatch(string $path)
     {
-        $currentMethod = server()->requestMethod();
+        $currentMethod = server()->getRequestMethod();
 
         $results = array_filter(self::$uris, function (URI $uri) use ($path, $currentMethod) {
             if ($uri->match($path) && $uri->getMethod() == $currentMethod) return $uri;
         });
+
+
 
         $uri = current($results);
 
@@ -93,7 +95,7 @@ abstract class Route
      */
     public static function serveFile(string $path)
     {
-        $filePath = implode(DIRECTORY_SEPARATOR, [server()->documentRoot(), $path]);
+        $filePath = implode(DIRECTORY_SEPARATOR, [server()->getDocumentRoot(), $path]);
 
         if (file_exists($filePath)) {
             $extension = pathinfo($filePath, PATHINFO_EXTENSION);

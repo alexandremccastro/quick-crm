@@ -8,10 +8,15 @@ final class Server
 {
   use Singletron;
 
+  public static function setRequestMethod($method)
+  {
+    $_SERVER['REQUEST_METHOD'] = $method;
+  }
+
   /**
    * @return string The current method of the request
    */
-  public static function requestMethod()
+  public static function getRequestMethod()
   {
     return $_SERVER['REQUEST_METHOD'];
   }
@@ -19,7 +24,7 @@ final class Server
   /**
    * @return string The document root of index.php file
    */
-  public static function documentRoot()
+  public static function getDocumentRoot()
   {
     return $_SERVER['DOCUMENT_ROOT'];
   }

@@ -25,6 +25,17 @@ class App
     Loader::load(['routes', 'helpers']);
   }
 
+
+  public function post(string $uri, array $data = [])
+  {
+    // ob_start();
+    server()->setRequestMethod('POST');
+    $_POST = $data;
+    ob_start();
+    Route::dispatch($uri);
+    return ob_get_clean();
+  }
+
   /**
    * Executes a given command provided by the shell
    * 
