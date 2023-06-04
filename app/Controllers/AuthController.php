@@ -3,9 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\User;
-use Core\Http\HttpStatus;
 use Exception;
-use StatusCode;
 
 class AuthController
 {
@@ -33,8 +31,6 @@ class AuthController
     } catch (Exception $e) {
       echo $e->getMessage();
     }
-
-    // view('auth.login', compact('name', 'company'));
   }
 
   public function showRegisterView()
@@ -49,21 +45,25 @@ class AuthController
 
       $user = new User();
 
+      $found = $user->findOne(['email', '=', $data['email']]);
+
+      if ($found)
+        return redirect('/register')
+          ->with(['alert' => ['type' => 'error', 'message' => 'Email already used.']]);
+
       $data['password'] = password_hash($data['password'], PASSWORD_BCRYPT);
 
       $user->insertOne($data);
+
+      return redirect('/login')->with(['alert' => ['type' => 'success', 'message' => 'Account created!']]);
     } catch (Exception $e) {
       echo $e->getMessage();
-    } finally {
-      return redirect('/login');
     }
-    // view('auth.login', compact('name', 'company'));
   }
 
   public function logout()
   {
     session()->destroy();
-    // header('Location: /login');
     return redirect('/login');
   }
 }

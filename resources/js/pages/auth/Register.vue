@@ -5,6 +5,10 @@
         <h1 class="text-2xl w-full"><span class="text-gray-600">Quick</span>CRM</h1>
         <p class="text-sm">Fill the form to register</p>
 
+        <template v-if="parsedAlert">
+          <Alert :type="parsedAlert.type" :message="parsedAlert.message" />
+        </template>
+
         <form method="post" action="/register" @submit="attemptRegister">
           <TextField label="Name" name="name" v-model="v$.user.name.$model" :errors="v$.user.name.$errors" type="text" />
           <TextField label="Email" name="email" v-model="v$.user.email.$model" :errors="v$.user.email.$errors"
@@ -26,10 +30,12 @@ import { defineComponent } from 'vue';
 import TextField from '@/components/Form/TextField.vue';
 import { useVuelidate } from '@vuelidate/core'
 import { validations as mockedValidations } from '@/core/validations/mock'
+import Alert from '@/components/Widgets/Alert.vue';
+import { parseJSON, isDefined } from '@/core/helpers/index';
 
 export default defineComponent({
   name: 'RegisterPage',
-  components: { TextField },
+  components: { TextField, Alert },
   setup() {
     return { v$: useVuelidate() }
   },
@@ -37,6 +43,9 @@ export default defineComponent({
     name: {
       type: String,
       default: ''
+    },
+    alert: {
+      default: () => { }
     }
   },
   data() {
@@ -46,6 +55,11 @@ export default defineComponent({
         email: '',
         password: ''
       }
+    }
+  },
+  computed: {
+    parsedAlert() {
+      return isDefined(this.alert) ? parseJSON(this.alert) : null
     }
   },
   validations() {

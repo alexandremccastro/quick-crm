@@ -30,16 +30,17 @@ final class Session
     return $_SESSION[$key] ?? null;
   }
 
-  public static function fetch(string $key): mixed
+  public static function fetch(string $key, bool $asJSON = false): mixed
   {
+    $data = null;
     if (isset($_SESSION[$key])) {
       $data = $_SESSION[$key];
       unset($_SESSION[$key]);
 
-      return $data;
+      return $asJSON ? json_encode($data, true) : $data;
     }
 
-    return null;
+    return $asJSON ? json_encode(null) : $data;;
   }
 
   public static function destroy(): bool

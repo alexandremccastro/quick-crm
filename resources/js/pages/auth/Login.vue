@@ -5,6 +5,10 @@
         <h1 class="text-2xl w-full"><span class="text-gray-600">Quick</span>CRM</h1>
         <p class="text-sm">Type your credentials to enter</p>
 
+        <template v-if="parsedAlert">
+          <Alert :type="parsedAlert.type" :message="parsedAlert.message" />
+        </template>
+
         <form ref="loginForm" method="post" action="/login" @submit="attemptLogin">
           <TextField label="Email" name="email" type="text" v-model="v$.user.email.$model"
             :errors="v$.user.email.$errors" />
@@ -27,10 +31,12 @@ import { defineComponent } from 'vue';
 import TextField from '@/components/Form/TextField.vue';
 import { useVuelidate } from '@vuelidate/core'
 import { validations as mockedValidations } from '@/core/validations/mock'
+import Alert from '@/components/Widgets/Alert.vue';
+import { parseJSON, isDefined } from '@/core/helpers/index';
 
 export default defineComponent({
   name: 'LoginPage',
-  components: { TextField },
+  components: { TextField, Alert },
   setup() {
     return { v$: useVuelidate() }
   },
@@ -38,6 +44,15 @@ export default defineComponent({
     name: {
       type: String,
       default: ''
+    },
+    alert: {
+      default: () => { }
+    }
+  },
+
+  computed: {
+    parsedAlert() {
+      return isDefined(this.alert) ? parseJSON(this.alert) : null
     }
   },
   data() {

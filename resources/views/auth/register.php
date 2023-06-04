@@ -1,3 +1,3 @@
 @parent('layout.auth')
 
-<Register name="Alexandre" />
+<Register alert='<?php echo session()->fetch('alert', true) ?>' />

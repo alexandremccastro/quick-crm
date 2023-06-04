@@ -2,4 +2,4 @@
 
 
 
-<Login alert="<?php echo session()->fetch('alert') ?>" />
+<Login alert='<?php echo session()->fetch('alert', true) ?>' />
