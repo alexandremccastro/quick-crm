@@ -1,1 +1,0 @@
-{"version":1,"defects":{"Tests\\AuthTest::testLogin":7,"Tests\\AuthTest::shouldLogin":7,"Tests\\AuthTest::itShouldLogin":7,"Tests\\AuthTest::userShouldLogin":7},"times":{"Tests\\AuthTest::testLogin":0.005,"Tests\\AuthTest::shouldLogin":0.005,"Tests\\AuthTest::itShouldLogin":0.005,"Tests\\AuthTest::userShouldLogin":0.005}}

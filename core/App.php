@@ -2,6 +2,7 @@
 
 namespace Core;
 
+use Core\Http\Response;
 use Core\Routing\Route;
 use Core\Scripts\Loader;
 use Database\MigrationRunner;
@@ -26,14 +27,13 @@ class App
   }
 
 
-  public function post(string $uri, array $data = [])
+  public function post(string $uri, array $data = []): Response
   {
     // ob_start();
-    server()->setRequestMethod('POST');
     $_POST = $data;
-    ob_start();
-    Route::dispatch($uri);
-    return ob_get_clean();
+    server()->setRequestMethod('POST');
+
+    return Route::dispatch($uri);
   }
 
   /**

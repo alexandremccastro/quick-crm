@@ -10,6 +10,9 @@ final class View
       $$key = $param;
     }
 
-    Loader::render($path);
+    $content = Loader::render($path);
+
+    return response()->setContent($content)
+      ->withHeaders(["Content-Type: text/html"]);
   }
 }

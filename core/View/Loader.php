@@ -11,7 +11,7 @@ final class Loader
    * 
    * @param $view The view to be rendered
    */
-  public static function render(string $view)
+  public static function render(string $view): string
   {
     $viewData = self::loadView($view);
 
@@ -21,9 +21,9 @@ final class Loader
     if ($parent) {
       $parentData = self::loadView($parent);
 
-      echo preg_replace("/@child/", $data, $parentData);
+      return preg_replace("/@child/", $data, $parentData);
     } else {
-      echo $data;
+      return $data;
     }
   }
 
@@ -39,7 +39,9 @@ final class Loader
     $dir = explode('.', $path);
     $viewPath = implode(DIRECTORY_SEPARATOR, [self::$viewsDir, ...$dir]) . '.php';
 
-    return file_get_contents($viewPath);
+    if (file_exists($viewPath)) return file_get_contents($viewPath);
+
+    return '';
   }
 
   /**

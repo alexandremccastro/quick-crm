@@ -2,6 +2,7 @@
 
 namespace Core\Routing;
 
+use Core\Http\Response;
 use Exception;
 
 class URI
@@ -78,19 +79,20 @@ class URI
      * 
      * @param $path The URI path passed by the browser
      */
-    public function execute(string $path)
+    public function execute(string $path): Response
     {
         try {
             $params = $this->getParams($path);
 
             if ($this->clazz) {
                 $clazz = new $this->clazz();
-                call_user_func_array([$clazz, $this->method], $params);
+                return call_user_func_array([$clazz, $this->method], $params);
             } else {
-                call_user_func($this->method, $params);
+                return call_user_func($this->method, $params);
             }
         } catch (Exception $e) {
             echo $e->getMessage();
+            return Response::getInstance();
         }
     }
 

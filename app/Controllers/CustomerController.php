@@ -10,7 +10,7 @@ class CustomerController
 
   public function index()
   {
-    view('customers.index');
+    return view('customers.index');
   }
 
   public function show(string $id)

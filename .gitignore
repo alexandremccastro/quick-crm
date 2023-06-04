@@ -5,3 +5,5 @@
 # Config files
 .env*
 !.env.example
+.phpunit.result.cache
+.phpunit.result.cache

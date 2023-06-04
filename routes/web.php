@@ -6,7 +6,7 @@ use App\Controllers\HomeController;
 use Core\Routing\Route;
 
 Route::get('/', function () {
-  redirect('/login');
+  return redirect('/login');
 });
 
 Route::get('/login', [AuthController::class, 'showLoginView']);

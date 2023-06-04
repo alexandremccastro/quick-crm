@@ -2,18 +2,24 @@
 
 use Core\Env\Parser;
 use Core\Http\Request;
+use Core\Http\Response;
 use Core\Http\Server;
 use Core\Session\Session;
 use Core\View\View;
+
+function response(): Response
+{
+  return Response::getInstance();
+}
 
 /**
  * Redirects the page to a given location
  * 
  * @param $path The path that will be redirected
  */
-function redirect(string $path)
+function redirect(string $path): Response
 {
-  header("Location: $path");
+  return response()->withHeaders(["Location: $path"]);
 }
 
 /**

@@ -2,6 +2,8 @@
 
 namespace Core\Routing;
 
+use Core\Http\HttpStatus;
+use Core\Http\Response;
 use Core\Routing\URI;
 use Exception;
 
@@ -58,7 +60,7 @@ abstract class Route
      * 
      * @param $path The path that will be loaded
      */
-    public static function dispatch(string $path)
+    public static function dispatch(string $path): Response
     {
         $currentMethod = server()->getRequestMethod();
 
@@ -66,14 +68,19 @@ abstract class Route
             if ($uri->match($path) && $uri->getMethod() == $currentMethod) return $uri;
         });
 
-
-
         $uri = current($results);
 
-        if ($uri) $uri->execute($path);
-        else if (self::isPublicPath($path))
-            self::serveFile($path);
-        else throw new Exception('Not found.', 404);
+
+        if ($uri) {
+            $response = $uri->execute($path);
+            return $response->send();
+        } else if (self::isPublicPath($path)) {
+            $response = self::serveFile($path);
+            return $response->send();
+        } else {
+            return view('errors.404')
+                ->withStatus(HttpStatus::NOT_FOUND)->send();
+        }
     }
 
     /**
@@ -93,7 +100,7 @@ abstract class Route
      * 
      * @param $path The path of the file
      */
-    public static function serveFile(string $path)
+    public static function serveFile(string $path): Response
     {
         $filePath = implode(DIRECTORY_SEPARATOR, [server()->getDocumentRoot(), $path]);
 
@@ -109,8 +116,8 @@ abstract class Route
 
             $contentType = $mimeTypes[$extension] ?? 'application/octet-stream';
 
-            echo header("Content-Type: $contentType");
-            echo file_get_contents($filePath);
+            return response()->withHeaders(["Content-Type: $contentType"])
+                ->setContent(file_get_contents($filePath));
         }
     }
 }

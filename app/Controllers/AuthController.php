@@ -3,14 +3,16 @@
 namespace App\Controllers;
 
 use App\Models\User;
+use Core\Http\HttpStatus;
 use Exception;
+use StatusCode;
 
 class AuthController
 {
 
   public function showLoginView()
   {
-    view('auth.login');
+    return view('auth.login');
   }
 
   public function login()
@@ -23,12 +25,10 @@ class AuthController
 
       // Not found or invalid credentials
       if (!$found || !password_verify($data['password'], $found->password)) {
-        echo 'Invalid credentials';
-        redirect('/login');
+        return redirect('/login');
       } else {
-        echo 'Logged in successfully';
         session()->set('user', $found);
-        redirect('/home');
+        return redirect('/home');
       }
     } catch (Exception $e) {
       echo $e->getMessage();
@@ -39,7 +39,7 @@ class AuthController
 
   public function showRegisterView()
   {
-    view('auth.register');
+    return view('auth.register');
   }
 
   public function register()
@@ -55,7 +55,7 @@ class AuthController
     } catch (Exception $e) {
       echo $e->getMessage();
     } finally {
-      redirect('/login');
+      return redirect('/login');
     }
     // view('auth.login', compact('name', 'company'));
   }
@@ -63,6 +63,6 @@ class AuthController
   public function logout()
   {
     session()->destroy();
-    redirect('/login');
+    return redirect('/login');
   }
 }
