@@ -10,7 +10,9 @@ final class Session
 
   public static function start(): bool
   {
-    return session_start();
+    if (session_status() !== PHP_SESSION_ACTIVE)
+      return session_start();
+    else return true;
   }
 
   public static function push(string $key, mixed $value)
