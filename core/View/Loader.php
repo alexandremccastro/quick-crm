@@ -39,7 +39,11 @@ final class Loader
     $dir = explode('.', $path);
     $viewPath = implode(DIRECTORY_SEPARATOR, [self::$viewsDir, ...$dir]) . '.php';
 
-    if (file_exists($viewPath)) return file_get_contents($viewPath);
+    if (file_exists($viewPath)) {
+      ob_start();
+      require_once $viewPath;
+      return ob_get_clean();
+    }
 
     return '';
   }
