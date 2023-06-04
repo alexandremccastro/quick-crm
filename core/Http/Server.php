@@ -18,7 +18,8 @@ final class Server
    */
   public static function getRequestMethod()
   {
-    return $_SERVER['REQUEST_METHOD'];
+    if (isset($_REQUEST['method'])) return $_REQUEST['method'];
+    else return $_SERVER['REQUEST_METHOD'];
   }
 
   /**
