@@ -12,7 +12,7 @@ final class AuthTest extends TestCase
   /**
    * @test
    */
-  public function userShouldLogin()
+  public function invalidUserShouldNotLogin()
   {
     $app = new App();
 
@@ -21,9 +21,25 @@ final class AuthTest extends TestCase
       'password' => 'password'
     ]);
 
-    $user = session()->get('user');
 
-    $this->assertNotNull($user, "User should not be null");
-    $this->assertEquals("Logged in successfully", $response);
+    $this->assertContains('Location: /login', $response->getHeaders(), "Should redirect to login");
+  }
+
+
+  /**
+   * @test
+   */
+  public function validUserShouldSuccessfullyLogin()
+  {
+    $app = new App();
+
+    $response = $app->post('/login', [
+      'email' => 'test@gmail.com',
+      'password' => 'testpass'
+    ]);
+
+
+
+    $this->assertContains('Location: /home', $response->getHeaders(), "Should redirect to home page");
   }
 }
