@@ -3,10 +3,12 @@
 namespace App\Controllers;
 
 use App\Models\User;
+use App\Traits\OnlyNonAuthenticated;
 use Exception;
 
 class AuthController
 {
+  use OnlyNonAuthenticated;
 
   public function showLoginView()
   {
