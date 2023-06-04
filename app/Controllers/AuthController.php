@@ -25,7 +25,7 @@ class AuthController
 
       // Not found or invalid credentials
       if (!$found || !password_verify($data['password'], $found->password)) {
-        return redirect('/login');
+        return redirect('/login')->with(['alert' => ['type' => 'error', 'message' => 'Invalid credentials!']]);
       } else {
         session()->set('user', $found);
         return redirect('/home');
