@@ -34,9 +34,10 @@ abstract class Model extends DB
 
     $stmt = self::db()->prepare($sql);
     $stmt->execute($data);
+    $insertedId = self::db()->lastInsertId();
     self::db()->commit();
 
-    return self::db()->lastInsertId();
+    return $insertedId;
   }
 
   /**
