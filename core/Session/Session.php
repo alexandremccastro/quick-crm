@@ -27,7 +27,19 @@ final class Session
 
   public static function get(string $key): mixed
   {
-    return $_SESSION[$key];
+    return $_SESSION[$key] ?? null;
+  }
+
+  public static function fetch(string $key): mixed
+  {
+    if (isset($_SESSION[$key])) {
+      $data = $_SESSION[$key];
+      unset($_SESSION[$key]);
+
+      return $data;
+    }
+
+    return null;
   }
 
   public static function destroy(): bool

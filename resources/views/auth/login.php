@@ -1,3 +1,5 @@
 @parent('layout.auth')
 
-<Login name="<?php echo user()->name ?>" />
+
+
+<Login alert="<?php echo session()->fetch('alert') ?>" />
