@@ -11,12 +11,11 @@ final class Loader
    * 
    * @param $view The view to be rendered
    */
-  public static function render(string $view): string
+  public static function render(string $view, array $params = []): string
   {
-    $viewData = self::loadView($view);
+    $viewData = self::loadView($view, $params);
 
     [$parent, $data] = self::getContent($viewData);
-
 
     if ($parent) {
       $parentData = self::loadView($parent);
@@ -34,13 +33,19 @@ final class Loader
    * 
    * @return string The view content
    */
-  private static function loadView(string $path): string
+  private static function loadView(string $path, array $params = []): string
   {
     $dir = explode('.', $path);
     $viewPath = implode(DIRECTORY_SEPARATOR, [self::$viewsDir, ...$dir]) . '.php';
 
     if (file_exists($viewPath)) {
+
       ob_start();
+
+      foreach ($params as $key => $param) {
+        $$key = $param;
+      }
+
       require_once $viewPath;
       return ob_get_clean();
     }
