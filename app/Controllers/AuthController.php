@@ -63,6 +63,7 @@ class AuthController
   public function logout()
   {
     session()->destroy();
+    // header('Location: /login');
     return redirect('/login');
   }
 }

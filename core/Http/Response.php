@@ -24,9 +24,9 @@ final class Response
   }
 
 
-  public static function withHeaders(array $headers): Response
+  public static function withHeaders(array $newHeaders): Response
   {
-    self::$headers = array_merge(self::$headers, $headers);
+    self::$headers = array_merge(self::$headers, $newHeaders);
     return self::getInstance();
   }
 

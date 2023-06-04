@@ -19,7 +19,7 @@ function response(): Response
  */
 function redirect(string $path): Response
 {
-  return response()->withHeaders(["Location: $path"]);
+  return response()->withHeaders(["HTTP/1.1 302 Found", "Location: $path"]);
 }
 
 /**
