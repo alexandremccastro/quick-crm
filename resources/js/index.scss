@@ -10,3 +10,20 @@
 #app {
   height: 100vh;
 }
+
+.input, .select, .select.select-md, .input.input-md {
+  height: 2.5rem!important;
+  min-height: 2.5rem!important;
+}
+
+.btn, .btn.btn-md {
+  height: 2.5rem;
+  min-height: 2.5rem;
+}
+
+
+.btn.btn-circle {
+  height: 3.5rem;
+  min-height: 3.5rem;
+  width: 3.5rem;
+}

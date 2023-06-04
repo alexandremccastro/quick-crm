@@ -16,6 +16,8 @@ final class Response
 
   private static mixed $content = null;
 
+  private static mixed $contentData = [];
+
   /**
    * This params will be set in session when the response is sent
    */
@@ -75,9 +77,10 @@ final class Response
    * 
    * @return Response The class returns itself
    */
-  public static function setContent(mixed $content): Response
+  public static function setContent(mixed $content, array $data = []): Response
   {
     self::$content = $content;
+    self::$contentData = $data;
     return self::getInstance();
   }
 

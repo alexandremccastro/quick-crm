@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@vuelidate/core": "^2.0.2",
-    "@vuelidate/validators": "^2.0.2"
+    "@vuelidate/validators": "^2.0.2",
+    "maska": "^2.1.9"
   }
 }

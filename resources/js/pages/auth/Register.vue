@@ -1,6 +1,6 @@
 <template>
   <div class="flex w-full h-full items-center justify-center">
-    <section class="card w-80 bg-base-100 shadow-md">
+    <section class="card w-80 bg-base-100 shadow-md rounded-lg">
       <article class="card-body py-6 px-8 text-center">
         <h1 class="text-2xl w-full"><span class="text-gray-600">Quick</span>CRM</h1>
         <p class="text-sm">Fill the form to register</p>

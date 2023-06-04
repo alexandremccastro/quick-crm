@@ -18,4 +18,9 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::get('/home', [HomeController::class, 'home']);
 
 Route::get('/customers', [CustomerController::class, 'index']);
-Route::get('/customers/{id}/edit', [CustomerController::class, 'show']);
+Route::get('/customers/create', [CustomerController::class, 'create']);
+Route::post('/customers', [CustomerController::class, 'save']);
+Route::get('/customers/favorites', [CustomerController::class, 'favorites']);
+Route::get('/customers/{id}/edit', [CustomerController::class, 'edit']);
+Route::put('/customers/{id}', [CustomerController::class, 'update']);
+Route::delete('/customers/{id}', [CustomerController::class, 'delete']);
