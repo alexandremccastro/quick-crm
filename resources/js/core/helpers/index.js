@@ -7,6 +7,8 @@ export const isDefined = (item) => {
 }
 
 export const cpf = (cpf) => {
+  if ([null, undefined].includes(cpf)) return true
+
   cpf = cpf.replace(/\D/g, '') // Remove non-digit characters
 
   if (cpf.length !== 11) {
@@ -69,6 +71,8 @@ export const cpf = (cpf) => {
 }
 
 export const cnpj = (cnpj) => {
+  if ([null, undefined].includes(cnpj)) return true
+
   cnpj = cnpj.replace(/\D/g, '') // Remove non-digit characters
 
   if (cnpj.length !== 14) {

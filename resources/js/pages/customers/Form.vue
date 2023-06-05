@@ -6,7 +6,7 @@
         <TextField label="Name" name="name" class="col-span-6" type="text" v-model="v$.customer.name.$model"
           :errors="v$.customer.name.$errors" />
 
-        <Datepicker label="Birth Date" name="birth_date" class="col-span-2" pattern="yyyy/mm/dd" type="text"
+        <Datepicker label="Birth Date" name="birth_date" class="col-span-2" pattern="yyyy-mm-dd" type="text"
           v-model="v$.customer.birth_date.$model" :errors="v$.customer.birth_date.$errors" />
       </div>
 

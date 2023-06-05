@@ -67,7 +67,7 @@ export default defineComponent({
     },
     pattern: {
       type: String,
-      default: 'yyyy/mm/dd'
+      default: 'yyyy-mm-dd'
     },
   },
 
