@@ -2,6 +2,9 @@
 
 namespace Core\Validation;
 
+use DateTime;
+use Exception;
+
 class Builder
 {
 
@@ -41,8 +44,17 @@ class Builder
 
   public function min(int $min)
   {
-    $this->rules[] = new Rule("Must have at least $min characters", function ($value) use ($min) {
+    $this->rules[] = new Rule("Must have at least $min characters", function (string $value) use ($min) {
       return strlen($value) >= $min;
+    }, true);
+
+    return $this;
+  }
+
+  public function minCount(int $min)
+  {
+    $this->rules[] = new Rule("Must have at least $min elements", function (array $elements) use ($min) {
+      return count($elements) >= $min;
     }, true);
 
     return $this;
@@ -52,6 +64,40 @@ class Builder
   {
     $this->rules[] = new Rule("Must have the maximum of $max characters", function ($value) use ($max) {
       return strlen($value) <= $max;
+    }, true);
+
+    return $this;
+  }
+
+  public function maxCount(int $max)
+  {
+    $this->rules[] = new Rule("Must have at least $max elements", function (array $elements) use ($max) {
+      return count($elements) <= $max;
+    }, true);
+
+    return $this;
+  }
+
+  public function length(int $length)
+  {
+    $this->rules[] = new Rule("Must have $length characters", function (string $value) use ($length) {
+      return strlen($value) == $length;
+    }, true);
+
+    return $this;
+  }
+
+  public function array()
+  {
+    $this->rules[] = new Rule("Must be an array", 'is_array', true);
+
+    return $this;
+  }
+
+  public function date(string $format = 'Y-m-d')
+  {
+    $this->rules[] = new Rule("Must be a valid date", function (string $date) use ($format) {
+      return DateTime::createFromFormat($format, $date);
     }, true);
 
     return $this;

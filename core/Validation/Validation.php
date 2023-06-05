@@ -29,12 +29,13 @@ abstract class Validation
     // validate data
     foreach ($this->data as $key => $value) {
       if (isset($rules[$key])) {
-        $result = $rules[$key]->validate($value);
+        $sanitizedValue = is_string($value) ? trim($value) : $value;
+        $result = $rules[$key]->validate($sanitizedValue);
 
         if (count($result) > 0)
           $errors[$key] = $result;
 
-        $validated[$key] = $value;
+        $validated[$key] = $sanitizedValue;
       }
     }
 
