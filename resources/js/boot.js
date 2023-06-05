@@ -6,6 +6,8 @@ dayjs.extend(relativeTime)
 dayjs.extend(utc)
 dayjs.extend(timezone)
 
+import 'flowbite/dist/datepicker.js'
+
 import Login from './pages/auth/Login.vue'
 import Register from './pages/auth/Register.vue'
 import Sidebar from './components/Layout/Sidebar.vue'

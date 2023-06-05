@@ -9,7 +9,7 @@
           <Alert :type="parsedAlert.type" :message="parsedAlert.message" />
         </template>
 
-        <form method="post" action="/register" @submit="attemptRegister">
+        <form autocomplete="off" method="post" action="/register" @submit="attemptRegister">
           <TextField label="Name" name="name" v-model="v$.user.name.$model" :errors="v$.user.name.$errors" type="text" />
           <TextField label="Email" name="email" v-model="v$.user.email.$model" :errors="v$.user.email.$errors"
             type="text" />
