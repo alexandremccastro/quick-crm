@@ -2,11 +2,24 @@
 
 namespace Core\Database;
 
-abstract class Model extends DB
+use PDOStatement;
+
+class Model extends DB
 {
+  use Query;
+
   protected $primaryKey = 'id';
-  protected $table = '';
   protected $fields = [];
+
+
+  public function execute(): PDOStatement
+  {
+    $sql = $this->getSql();
+    $stmt = $this->db()->prepare($sql);
+    $stmt->execute($this->getParams());
+    $this->cleanQuery();
+    return $stmt;
+  }
 
   /**
    * Inserts one record in a table on database

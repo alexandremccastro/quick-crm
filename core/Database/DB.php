@@ -14,16 +14,26 @@ abstract class DB
   public static function db()
   {
     if (self::$instance == null) {
-      self::$instance = new \PDO(self::getDNS(), self::getUser(), self::getPswd());
+      self::$instance = new \PDO(self::getDsn(), self::getUser(), self::getPswd());
     }
 
     return self::$instance;
   }
 
+  public static function beginTransaction()
+  {
+    self::db()->beginTransaction();
+  }
+
+  public static function commitTransaction()
+  {
+    self::db()->commit();
+  }
+
   /**
    * @return string The DNS connection string
    */
-  private static function getDNS(): string
+  private static function getDsn(): string
   {
     $dbType = env('DB_TYPE');
     $dbHost = env('DB_HOST');
