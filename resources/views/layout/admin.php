@@ -10,7 +10,7 @@
 </head>
 
 <body>
-  <main class="flex bg-gray-100" id="app">
+  <main class="flex bg-[#f3f3f3]" id="app">
     <sidebar></sidebar>
 
     <div class="w-full h-full overflow-y-scroll">

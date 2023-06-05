@@ -8,7 +8,7 @@
 
     <nav class=" p-3">
       <ul>
-        <a href="/home" class="px-3 flex py-2 gap-5 hover:bg-black hover:bg-opacity-20 cursor-pointer rounded">
+        <!-- <a href="/home" class="px-3 flex py-2 gap-5 hover:bg-black hover:bg-opacity-20 cursor-pointer rounded">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
             class="w-6 h-6">
             <path stroke-linecap="round" stroke-linejoin="round"
@@ -16,7 +16,7 @@
           </svg>
 
           <span>Dashboard</span>
-        </a>
+        </a> -->
 
         <a href="/customers" class="px-3 flex py-2 gap-5 hover:bg-black hover:bg-opacity-20 cursor-pointer rounded">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
@@ -28,7 +28,7 @@
           <span>Customers</span>
         </a>
 
-        <a href="/customers/favorites"
+        <!-- <a href="/customers/favorites"
           class="px-3 flex py-2 gap-5 hover:bg-black hover:bg-opacity-20 cursor-pointer rounded">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
             class="w-6 h-6">
@@ -39,7 +39,7 @@
 
 
           <span>Favorites</span>
-        </a>
+        </a> -->
       </ul>
     </nav>
   </aside>
