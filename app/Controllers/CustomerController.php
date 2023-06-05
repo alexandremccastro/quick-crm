@@ -4,14 +4,16 @@ namespace App\Controllers;
 
 use App\Models\Address;
 use App\Models\Customer;
-use App\Traits\OnlyAuthenticated;
 use App\Validations\Customers\CreateCustomerValidation;
 use App\Validations\Customers\UpdateCustomerValidation;
 use Core\Exceptions\ValidationException;
 
-class CustomerController
+class CustomerController extends BaseController
 {
-  use OnlyAuthenticated;
+  public function __construct()
+  {
+    parent::__construct(true);
+  }
 
   public function index()
   {

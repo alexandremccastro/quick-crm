@@ -6,7 +6,6 @@ use App\Traits\OnlyAuthenticated;
 
 class HomeController
 {
-  use OnlyAuthenticated;
 
   public function home()
   {
