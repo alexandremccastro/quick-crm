@@ -39,6 +39,13 @@ class Builder
     return $this;
   }
 
+  public function customRule(Rule $rule)
+  {
+    $this->rules[] = $rule;
+
+    return $this;
+  }
+
   public function validate($value)
   {
     $errors = [];
