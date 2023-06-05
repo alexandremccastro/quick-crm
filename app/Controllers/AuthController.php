@@ -4,8 +4,8 @@ namespace App\Controllers;
 
 use App\Models\User;
 use App\Traits\OnlyNonAuthenticated;
-use App\Validations\LoginValidation;
-use App\Validations\RegisterValidation;
+use App\Validations\Auth\LoginValidation;
+use App\Validations\Auth\RegisterValidation;
 use Core\Exceptions\ValidationException;
 use Exception;
 

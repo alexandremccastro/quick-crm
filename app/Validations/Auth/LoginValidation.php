@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Validations;
+namespace App\Validations\Auth;
 
 use Core\Validation\Validation;
 
