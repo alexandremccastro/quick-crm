@@ -7,7 +7,6 @@ use App\Traits\OnlyNonAuthenticated;
 use App\Validations\Auth\LoginValidation;
 use App\Validations\Auth\RegisterValidation;
 use Core\Exceptions\ValidationException;
-use Exception;
 
 class AuthController
 {

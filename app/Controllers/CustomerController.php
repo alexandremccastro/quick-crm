@@ -5,7 +5,7 @@ namespace App\Controllers;
 use App\Models\Address;
 use App\Models\Customer;
 use App\Traits\OnlyAuthenticated;
-use App\Validations\LoginValidation;
+use App\Validations\Customers\CreateCustomerValidation;
 use Core\Exceptions\ValidationException;
 
 class CustomerController
@@ -44,27 +44,33 @@ class CustomerController
 
   public function save()
   {
-    $data = request()->all();
+    try {
+      $data = request()->all();
 
-    $addresses = $data['address'];
-    unset($data['address']);
+      $customerValidation = new CreateCustomerValidation($data);
+      $validated = $customerValidation->validate();
 
-    $data['user_id'] = user()->id;
-    $data['cpf'] = preg_replace('/([\.\-]+)/', '', $data['cpf']);
-    $data['cnpj'] = preg_replace('/([\.\-\/]+)/', '', $data['cnpj']);
-    $data['birth_date'] = date('Y-m-d');
+      $addresses = $validated['address'];
+      unset($validated['address']);
 
-    $customer = new Customer();
-    $customerId = $customer->insertOne($data);
+      $validated['user_id'] = user()->id;
+      $validated['cpf'] = preg_replace('/[^0-9]/is', '', $validated['cpf']);
+      $validated['cnpj'] = preg_replace('/[^0-9]/is', '', $validated['cnpj']);
 
-    $address = new Address();
+      $customer = new Customer();
+      $customerId = $customer->insertOne($validated);
 
-    foreach ($addresses as $data) {
-      $data['customer_id'] = $customerId;
-      $address->insertOne($data);
+      $address = new Address();
+
+      foreach ($addresses as $data) {
+        $data['customer_id'] = $customerId;
+        $address->insertOne($data);
+      }
+
+      return redirect('/customers');
+    } catch (ValidationException $e) {
+      return redirect('/customers/create')->with(['errors' => $e->getErrors()]);
     }
-
-    return redirect('/customers');
   }
 
   public function update(string $id)
@@ -104,7 +110,7 @@ class CustomerController
   public function favorites()
   {
     try {
-      $validation = new LoginValidation(['email' => 123, 'password' => 12]);
+      $validation = new \App\Validations\Auth\LoginValidation(['email' => 123, 'password' => 12]);
       $validation->validate();
     } catch (ValidationException $e) {
       var_dump($e->getErrors());
