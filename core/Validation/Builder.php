@@ -39,6 +39,24 @@ class Builder
     return $this;
   }
 
+  public function min(int $min)
+  {
+    $this->rules[] = new Rule("Must have at least $min characters", function ($value) use ($min) {
+      return strlen($value) >= $min;
+    }, true);
+
+    return $this;
+  }
+
+  public function max(int $max)
+  {
+    $this->rules[] = new Rule("Must have the maximum of $max characters", function ($value) use ($max) {
+      return strlen($value) <= $max;
+    }, true);
+
+    return $this;
+  }
+
   public function customRule(Rule $rule)
   {
     $this->rules[] = $rule;

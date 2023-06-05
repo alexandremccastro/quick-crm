@@ -14,8 +14,8 @@ class LoginValidation extends Validation
   public function rules(): array
   {
     return [
-      'email' => $this->builder()->required()->string()->email(),
-      'password' => $this->builder()->required()->string()
+      'email' => $this->builder()->required()->string()->email()->max(100),
+      'password' => $this->builder()->required()->string()->min(4)->max(100)
     ];
   }
 }
