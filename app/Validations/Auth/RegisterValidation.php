@@ -29,7 +29,7 @@ class RegisterValidation extends Validation
   {
     return new Rule('Email already exists', function ($email) {
       $userModel = new User();
-      $found = $userModel->where('email', '=', $email)
+      $found = $userModel->select()->where('email', '=', $email)
         ->execute()->fetch(PDO::FETCH_ASSOC);
 
       return $found == null;
