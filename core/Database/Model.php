@@ -21,6 +21,11 @@ class Model extends DB
     return $stmt;
   }
 
+  public function lastInsertId()
+  {
+    return $this->db()->lastInsertId();
+  }
+
   /**
    * Inserts one record in a table on database
    * 

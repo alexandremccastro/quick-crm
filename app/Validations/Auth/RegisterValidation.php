@@ -19,7 +19,7 @@ class RegisterValidation extends Validation
       'name' => $this->builder()->required()->string()->min(2)->max(100)->trim(),
       'email' => $this->builder()->required()->string()
         ->email()->customRule($this->emailMustBeUnique())->max(100)->trim(),
-      'password' => $this->builder()->required()->string()->max(255)->min(4)
+      'password' => $this->builder()->required()->string()->max(100)->min(4)
     ];
   }
 
