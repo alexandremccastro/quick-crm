@@ -5,6 +5,8 @@ namespace App\Controllers;
 use App\Models\Address;
 use App\Models\Customer;
 use App\Traits\OnlyAuthenticated;
+use App\Validations\LoginValidation;
+use Core\Exceptions\ValidationException;
 
 class CustomerController
 {
@@ -101,7 +103,12 @@ class CustomerController
 
   public function favorites()
   {
-    echo 'See customer sadasdasd ';
+    try {
+      $validation = new LoginValidation(['email' => 123, 'password' => 12]);
+      $validation->validate();
+    } catch (ValidationException $e) {
+      var_dump($e->getErrors());
+    }
   }
 
   public function delete(string $id)

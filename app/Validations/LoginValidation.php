@@ -6,6 +6,11 @@ use Core\Validation\Validation;
 
 class LoginValidation extends Validation
 {
+  public function __construct(array $data)
+  {
+    parent::__construct($data);
+  }
+
   public function rules(): array
   {
     return [

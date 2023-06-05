@@ -7,15 +7,19 @@ use Core\Validation\Builder;
 
 abstract class Validation
 {
+  public function __construct(
+    protected array $data
+  ) {
+  }
 
-  public abstract function rules(): mixed;
+  public abstract function rules(): array;
 
   public function builder(): Builder
   {
     return new Builder();
   }
 
-  public function validate(array $data)
+  public function validate()
   {
     $rules = $this->rules();
 
@@ -23,9 +27,13 @@ abstract class Validation
     $validated = [];
 
     // validate data
-    foreach ($data as $key => $value) {
+    foreach ($this->data as $key => $value) {
       if (isset($rules[$key])) {
-        $errors[$key] = $rules[$key]->validate($value);
+        $result = $rules[$key]->validate($value);
+
+        if (count($result) > 0)
+          $errors[$key] = $result;
+
         $validated[$key] = $value;
       }
     }
