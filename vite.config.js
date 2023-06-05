@@ -31,6 +31,7 @@ export default defineConfig({
     alias: {
       '@': fileURLToPath(new URL('./resources/js', import.meta.url)),
       vue: 'vue/dist/vue.esm-bundler.js',
+      relativeTime: 'dayjs/plugin/relativeTime.js',
     },
   },
 })

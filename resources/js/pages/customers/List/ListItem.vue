@@ -12,11 +12,11 @@
       </div>
     </td>
     <td>
-      {{ customer.cpf }}
+      {{ $filters.maskCPF(customer.cpf) }}
 
     </td>
     <td>{{ customer.phone }}</td>
-    <td>{{ customer.created_at }}</td>
+    <td>{{ $filters.formatDate(customer.created_at) }}</td>
     <th>
       <a :href="`/customers/${customer.id}/edit`" class="btn btn-ghost btn-xs">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"

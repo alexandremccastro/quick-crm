@@ -22,6 +22,7 @@
   "dependencies": {
     "@vuelidate/core": "^2.0.2",
     "@vuelidate/validators": "^2.0.2",
+    "dayjs": "^1.11.8",
     "maska": "^2.1.9"
   }
 }
