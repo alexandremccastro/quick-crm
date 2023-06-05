@@ -39,7 +39,7 @@ class CreateCustomerValidation extends Validation
     return new Rule('CPF already exists', function ($cpf) {
       $customerModel = new Customer();
       $cpf = preg_replace("/[^0-9]/is", '', $cpf);
-      $found = $customerModel->where('cpf', '=', $cpf)
+      $found = $customerModel->select()->where('cpf', '=', $cpf)
         ->execute()->fetch(PDO::FETCH_ASSOC);
 
       return $found == null;
@@ -58,7 +58,7 @@ class CreateCustomerValidation extends Validation
     return new Rule('CNPJ already exists', function ($cnpj) {
       $customerModel = new Customer();
       $cnpj = preg_replace("/[^0-9]/is", '', $cnpj);
-      $found = $customerModel->where('cnpj', '=', $cnpj)
+      $found = $customerModel->select()->where('cnpj', '=', $cnpj)
         ->execute()->fetch(PDO::FETCH_ASSOC);
 
       return $found == null;

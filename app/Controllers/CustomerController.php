@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Models\Customer;
 use App\Repository\AddressRepository;
 use App\Repository\CustomerRepository;
+use App\Validations\Address\AddressValidation;
 use App\Validations\Customers\CreateCustomerValidation;
 use App\Validations\Customers\UpdateCustomerValidation;
 use Core\Database\DB;
@@ -54,13 +55,15 @@ class CustomerController extends BaseController
 
   public function save()
   {
+    DB::beginTransaction();
+
     try {
       $data = request()->all();
 
       $customerValidation = new CreateCustomerValidation($data);
       $validated = $customerValidation->validate();
 
-      DB::beginTransaction();
+
       $addresses = $validated['address'];
       unset($validated['address']);
 
@@ -69,29 +72,31 @@ class CustomerController extends BaseController
       $customerId = $this->customerRepository->insertOne($validated);
 
       foreach ($addresses as $data) {
-        $data['customer_id'] = $customerId;
-        unset($data['id']);
-        $this->addressRepository->insertOne($data);
+        $validation = new AddressValidation($data);
+        $validated = $validation->validate();
+        $validated['customer_id'] = $customerId;
+        $this->addressRepository->insertOne($validated);
       }
 
       DB::commitTransaction();
 
       return redirect('/customers');
     } catch (ValidationException $e) {
-      DB::rollbackTransaction();
+      // DB::rollbackTransaction();
       return redirect('/customers/create')->with(['errors' => $e->getErrors()]);
     }
   }
 
   public function update(string $id)
   {
+    DB::beginTransaction();
     try {
       $data = request()->all();
 
       $customerValidation = new UpdateCustomerValidation($data);
       $validated = $customerValidation->validate();
 
-      DB::beginTransaction();
+
       $addresses = $validated['address'];
       unset($validated['address']);
 
@@ -100,12 +105,13 @@ class CustomerController extends BaseController
 
       foreach ($addresses as $data) {
         $data['customer_id'] = $id;
+        $validation = new AddressValidation($data);
+        $validated = $validation->validate();
 
         if (isset($data['id']) && !empty($data['id']))
-          $this->addressRepository->updateOne($data['id'], $data);
+          $this->addressRepository->updateOne($data['id'], $validated);
         else {
-          unset($data['id']);
-          $this->addressRepository->insertOne($data);
+          $this->addressRepository->insertOne($validated);
         }
       }
 
