@@ -89,7 +89,7 @@ class CustomerController
       $validated['cpf'] = preg_replace('/([\.\-]+)/', '', $validated['cpf']);
       $validated['cnpj'] = preg_replace('/([\.\-\/]+)/', '', $validated['cnpj']);
 
-      $customerModel->updateOne($id, $data);
+      $customerModel->updateOne($id, $validated);
 
       $addressModel = new Address();
 
