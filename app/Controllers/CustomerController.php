@@ -6,6 +6,7 @@ use App\Models\Address;
 use App\Models\Customer;
 use App\Traits\OnlyAuthenticated;
 use App\Validations\Customers\CreateCustomerValidation;
+use App\Validations\Customers\UpdateCustomerValidation;
 use Core\Exceptions\ValidationException;
 
 class CustomerController
@@ -75,31 +76,39 @@ class CustomerController
 
   public function update(string $id)
   {
-    $customerModel = new Customer();
-    $data = request()->all();
+    try {
+      $customerModel = new Customer();
+      $data = request()->all();
 
-    $addresses = $data['address'];
-    unset($data['address']);
-    unset($data['method']);
-    $data['cpf'] = preg_replace('/([\.\-]+)/', '', $data['cpf']);
-    $data['cnpj'] = preg_replace('/([\.\-\/]+)/', '', $data['cnpj']);
-    $customerModel->updateOne($id, $data);
+      $customerValidation = new UpdateCustomerValidation($data);
+      $validated = $customerValidation->validate();
 
-    $addressModel = new Address();
+      $addresses = $validated['address'];
+      unset($validated['address']);
 
-    foreach ($addresses as $data) {
-      $data['customer_id'] = $id;
+      $validated['cpf'] = preg_replace('/([\.\-]+)/', '', $validated['cpf']);
+      $validated['cnpj'] = preg_replace('/([\.\-\/]+)/', '', $validated['cnpj']);
 
-      if (isset($data['id']) && !empty($data['id']))
-        $addressModel->updateOne($data['id'], $data);
-      else {
-        unset($data['id']);
-        $addressModel->insertOne($data);
+      $customerModel->updateOne($id, $data);
+
+      $addressModel = new Address();
+
+      foreach ($addresses as $data) {
+        $data['customer_id'] = $id;
+
+        if (isset($data['id']) && !empty($data['id']))
+          $addressModel->updateOne($data['id'], $data);
+        else {
+          unset($data['id']);
+          $addressModel->insertOne($data);
+        }
       }
-    }
 
-    return redirect('/customers')
-      ->with(['alert' => ['type' => 'success', 'message' => 'Customer updated.']]);
+      return redirect('/customers')
+        ->with(['alert' => ['type' => 'success', 'message' => 'Customer updated.']]);
+    } catch (ValidationException $e) {
+      return redirect("/customers/$id/edit")->with(['errors' => $e->getErrors()]);
+    }
   }
 
   public function show(string $id)
