@@ -64,14 +64,14 @@ export default defineComponent({
     this.customer = { ...this.data }
   },
   validations() {
-    const { required } = mockedValidations
+    const { required, cpf, cnpj } = mockedValidations
 
     return {
       customer: {
         name: { required },
         birth_date: { required },
-        cpf: { required },
-        cnpj: { required },
+        cpf: { required, cpf },
+        cnpj: { required, cnpj },
         phone: { required },
       }
     }

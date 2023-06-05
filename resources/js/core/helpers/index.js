@@ -6,6 +6,134 @@ export const isDefined = (item) => {
   return item !== undefined && item !== null
 }
 
+export const cpf = (cpf) => {
+  cpf = cpf.replace(/\D/g, '') // Remove non-digit characters
+
+  if (cpf.length !== 11) {
+    return false
+  }
+
+  // Check for known invalid CPF patterns
+  const invalidPatterns = [
+    '00000000000',
+    '11111111111',
+    '22222222222',
+    '33333333333',
+    '44444444444',
+    '55555555555',
+    '66666666666',
+    '77777777777',
+    '88888888888',
+    '99999999999',
+  ]
+
+  if (invalidPatterns.includes(cpf)) {
+    return false
+  }
+
+  // Validate CPF digit verification
+  let sum = 0
+  let remainder
+
+  for (let i = 1; i <= 9; i++) {
+    sum += parseInt(cpf.substring(i - 1, i)) * (11 - i)
+  }
+
+  remainder = (sum * 10) % 11
+
+  if (remainder === 10 || remainder === 11) {
+    remainder = 0
+  }
+
+  if (remainder !== parseInt(cpf.substring(9, 10))) {
+    return false
+  }
+
+  sum = 0
+
+  for (let i = 1; i <= 10; i++) {
+    sum += parseInt(cpf.substring(i - 1, i)) * (12 - i)
+  }
+
+  remainder = (sum * 10) % 11
+
+  if (remainder === 10 || remainder === 11) {
+    remainder = 0
+  }
+
+  if (remainder !== parseInt(cpf.substring(10, 11))) {
+    return false
+  }
+
+  return true
+}
+
+export const cnpj = (cnpj) => {
+  cnpj = cnpj.replace(/\D/g, '') // Remove non-digit characters
+
+  if (cnpj.length !== 14) {
+    return false
+  }
+
+  // Check for known invalid CNPJ patterns
+  const invalidPatterns = [
+    '00000000000000',
+    '11111111111111',
+    '22222222222222',
+    '33333333333333',
+    '44444444444444',
+    '55555555555555',
+    '66666666666666',
+    '77777777777777',
+    '88888888888888',
+    '99999999999999',
+  ]
+
+  if (invalidPatterns.includes(cnpj)) {
+    return false
+  }
+
+  // Validate CNPJ digit verification
+  let sum = 0
+  let position = 5
+  let digit
+
+  for (let i = 0; i < 12; i++) {
+    sum += parseInt(cnpj.charAt(i)) * position
+    position--
+
+    if (position < 2) {
+      position = 9
+    }
+  }
+
+  digit = sum % 11 < 2 ? 0 : 11 - (sum % 11)
+
+  if (parseInt(cnpj.charAt(12)) !== digit) {
+    return false
+  }
+
+  sum = 0
+  position = 6
+
+  for (let i = 0; i < 13; i++) {
+    sum += parseInt(cnpj.charAt(i)) * position
+    position--
+
+    if (position < 2) {
+      position = 9
+    }
+  }
+
+  digit = sum % 11 < 2 ? 0 : 11 - (sum % 11)
+
+  if (parseInt(cnpj.charAt(13)) !== digit) {
+    return false
+  }
+
+  return true
+}
+
 export const countries = [
   { name: 'Afghanistan', code: 'AF' },
   { name: 'Åland Islands', code: 'AX' },
