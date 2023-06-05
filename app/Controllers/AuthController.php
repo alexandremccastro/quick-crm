@@ -32,10 +32,10 @@ class AuthController extends BaseController
 
       $validated = $loginValidation->validate();
 
-      $found = $this->userRepository->findOne('email', '=', $validated['email']);
+      $found = (object) $this->userRepository->findOne('email', '=', $validated['email']);
 
       // Not found or invalid credentials
-      if (!$found || !password_verify($validated['password'], $found['password'])) {
+      if (!$found || !password_verify($validated['password'], $found->password)) {
         return redirect('/login')->with(['alert' => ['type' => 'error', 'message' => 'Invalid credentials!']]);
       } else {
         session()->set('user', $found);

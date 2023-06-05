@@ -77,7 +77,7 @@ function session(): Session
  */
 function user(): mixed
 {
-  return Session::getInstance()->get('user');
+  return session()->get('user');
 }
 
 function isAuthenticated(): bool
