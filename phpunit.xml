@@ -4,8 +4,11 @@
     stopOnFailure="false">
 
     <testsuites>
-        <testsuite name="QuickCRM">
-            <directory>tests</directory>
+        <testsuite name="Auth">
+            <directory>tests/Auth</directory>
+        </testsuite>
+        <testsuite name="Customers">
+            <directory>tests/Customers</directory>
         </testsuite>
     </testsuites>
 </phpunit>

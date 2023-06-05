@@ -2,6 +2,7 @@
 
 namespace Core\Http;
 
+use Core\Routing\Method;
 use Core\Traits\Singletron;
 
 final class Request
@@ -14,6 +15,20 @@ final class Request
   public static function post(string $key)
   {
     return $_POST[$key] ?? null;
+  }
+
+  public static function setData(array $data, Method $method)
+  {
+    switch ($method) {
+      case Method::POST:
+      case Method::PATCH:
+      case Method::PATCH:
+        $_POST = $data;
+        break;
+      case Method::GET:
+        $_GET = $data;
+        break;
+    }
   }
 
   /**

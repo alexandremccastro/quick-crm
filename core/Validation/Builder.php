@@ -44,7 +44,7 @@ class Builder
 
   public function min(int $min)
   {
-    $this->rules[] = new Rule("Must have at least $min characters", function (string $value) use ($min) {
+    $this->rules[] = new Rule("Must have at least $min characters", function (string | null $value) use ($min) {
       return strlen($value) >= $min;
     }, true);
 
@@ -80,7 +80,7 @@ class Builder
 
   public function length(int $length)
   {
-    $this->rules[] = new Rule("Must have $length characters", function (string $value) use ($length) {
+    $this->rules[] = new Rule("Must have $length characters", function (string | null $value) use ($length) {
       return strlen($value) == $length;
     }, true);
 
@@ -96,7 +96,7 @@ class Builder
 
   public function date(string $format = 'Y-m-d')
   {
-    $this->rules[] = new Rule("Must be a valid date", function (string $date) use ($format) {
+    $this->rules[] = new Rule("Must be a valid date", function (string | null $date) use ($format) {
       return DateTime::createFromFormat($format, $date);
     }, true);
 
@@ -105,7 +105,7 @@ class Builder
 
   public function trim()
   {
-    $this->rules[] = new Rule("", function (string &$value) {
+    $this->rules[] = new Rule("", function (string | null &$value) {
       $value = trim($value);
       return true;
     }, true);
@@ -115,7 +115,7 @@ class Builder
 
   public function onlyDigits()
   {
-    $this->rules[] = new Rule("", function (string &$value) {
+    $this->rules[] = new Rule("", function (string | null &$value) {
       $value = preg_replace('/[^0-9]/is', '', $value);
       return true;
     }, true);

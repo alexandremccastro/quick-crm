@@ -27,16 +27,18 @@ abstract class Validation
     $validated = [];
 
     // validate data
-    foreach ($this->data as $key => $value) {
-      if (isset($rules[$key])) {
-        $value2 = $value;
-        $result = $rules[$key]->validate($value2);
+    foreach ($rules as $key => $rule) {
+      $value = null;
 
-        if (count($result) > 0)
-          $errors[$key] = $result;
+      if (isset($this->data[$key]))
+        $value = $this->data[$key];
 
-        $validated[$key] = $value2;
-      }
+      $result = $rule->validate($value);
+
+      if (count($result) > 0)
+        $errors[$key] = $result;
+
+      $validated[$key] = $value;
     }
 
     foreach ($errors as $error) {

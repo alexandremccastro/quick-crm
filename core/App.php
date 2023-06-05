@@ -3,15 +3,21 @@
 namespace Core;
 
 use Core\Http\Response;
+use Core\Routing\Method;
 use Core\Routing\Route;
 use Core\Scripts\Loader;
 use Database\MigrationRunner;
 
 class App
 {
-  public function __construct()
+  public function __construct(bool $clearCache = false)
   {
     $this->load();
+
+    if ($clearCache) {
+      response()->clearPrevious();
+      session()->destroy();
+    }
 
     date_default_timezone_set(env('TIMEZONE', 'UTC'));
 
@@ -31,8 +37,7 @@ class App
 
   public function post(string $uri, array $data = []): Response
   {
-    // ob_start();
-    $_POST = $data;
+    request()->setData($data, Method::POST);
     server()->setRequestMethod('POST');
 
     return Route::dispatch($uri);

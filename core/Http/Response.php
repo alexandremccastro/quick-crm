@@ -116,9 +116,9 @@ final class Response
   /**
    * @return int The status code of the response
    */
-  public static function getHttpCode()
+  public static function getHttpCode(): int
   {
-    return self::$httpCode;
+    return self::$httpCode->value;
   }
 
 
@@ -144,5 +144,14 @@ final class Response
   public static function getParams()
   {
     return self::$params;
+  }
+
+  public static function clearPrevious()
+  {
+    self::$headers = [];
+    self::$params = [];
+    self::$content = '';
+    self::$contentData = [];
+    self::$httpCode = HttpStatus::OK;
   }
 }

@@ -45,6 +45,9 @@ final class Session
 
   public static function destroy(): bool
   {
-    return session_destroy();
+    if (session_status() == PHP_SESSION_ACTIVE)
+      return session_destroy();
+
+    return false;
   }
 }
