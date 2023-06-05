@@ -31,20 +31,35 @@
         <ListItem v-for="customer in parsedCustomers" :customer="customer" />
       </tbody>
     </table>
+
+    <Pagination :currentPage="currentPage" :totalPages="totalPages" />
   </div>
 </template>
 <script>
 import { defineComponent } from 'vue';
 import ListItem from './List/ListItem.vue';
-
+import Pagination from '@/components/Pagination.vue';
 export default defineComponent({
   name: 'ListCustomers',
-  props: ['customers'],
-  components: { ListItem, ListItem },
+  props: ['pagination'],
+  components: { ListItem, ListItem, Pagination },
+
+  created() {
+    console.log(this.pagination);
+  },
 
   computed: {
+    parsedPagination() {
+      return JSON.parse(this.pagination)
+    },
     parsedCustomers() {
-      return JSON.parse(this.customers)
+      return this.parsedPagination?.records
+    },
+    currentPage() {
+      return parseInt(this.parsedPagination?.currentPage)
+    },
+    totalPages() {
+      return parseInt(this.parsedPagination?.totalPages)
     }
   }
 })

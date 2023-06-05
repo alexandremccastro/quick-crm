@@ -5,6 +5,7 @@ namespace App\Validations\Customers;
 use App\Models\Customer;
 use Core\Validation\Rule;
 use Core\Validation\Validation;
+use PDO;
 
 class CreateCustomerValidation extends Validation
 {
@@ -38,7 +39,8 @@ class CreateCustomerValidation extends Validation
     return new Rule('CPF already exists', function ($cpf) {
       $customerModel = new Customer();
       $cpf = preg_replace("/[^0-9]/is", '', $cpf);
-      $found = $customerModel->findOne(['cpf', '=', $cpf]);
+      $found = $customerModel->where('cpf', '=', $cpf)
+        ->execute()->fetch(PDO::FETCH_ASSOC);
 
       return $found == null;
     }, true);
@@ -56,7 +58,8 @@ class CreateCustomerValidation extends Validation
     return new Rule('CNPJ already exists', function ($cnpj) {
       $customerModel = new Customer();
       $cnpj = preg_replace("/[^0-9]/is", '', $cnpj);
-      $found = $customerModel->findOne(['cnpj', '=', $cnpj]);
+      $found = $customerModel->where('cnpj', '=', $cnpj)
+        ->execute()->fetch(PDO::FETCH_ASSOC);
 
       return $found == null;
     }, true);

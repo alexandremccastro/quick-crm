@@ -2,27 +2,36 @@
 
 namespace App\Controllers;
 
-use App\Models\Address;
 use App\Models\Customer;
+use App\Repository\AddressRepository;
+use App\Repository\CustomerRepository;
 use App\Validations\Customers\CreateCustomerValidation;
 use App\Validations\Customers\UpdateCustomerValidation;
+use Core\Database\DB;
 use Core\Exceptions\ValidationException;
+use PDO;
 
 class CustomerController extends BaseController
 {
+  private CustomerRepository $customerRepository;
+  private AddressRepository $addressRepository;
+
   public function __construct()
   {
     parent::__construct(true);
+
+    $this->customerRepository = new CustomerRepository();
+    $this->addressRepository = new AddressRepository();
   }
 
   public function index()
   {
-    $customer = new Customer();
-    $stmt = $customer->db()->prepare('SELECT * from customers where user_id = :user_id ORDER BY id DESC');
-    $stmt->execute(['user_id' => user()->id]);
-    $customers = $stmt->fetchAll();
+    $currentPage = request()->get('page') ?? 1;
+    $pagination = $this->customerRepository
+      ->paginate(request()->all(), $currentPage);
 
-    return view('customers.index', compact('customers'));
+
+    return view('customers.index', compact('pagination'));
   }
 
   public function create()
@@ -32,15 +41,13 @@ class CustomerController extends BaseController
 
   public function edit(string $id)
   {
-    $model = new Customer();
+    $customer = $this->customerRepository->where('id', '=', $id)
+      ->andWhere('user_id', '=', user()->id)->execute()->fetch(PDO::FETCH_ASSOC);
 
-    $customer = $model->findOne(['id', '=', $id]);
+    if (!$customer) return view('errors.404')->with(['error' => 'Not found.']);
 
-    $address = new Address();
-
-    $addresses = $address->findOne(['customer_id', '=', $customer->id]);
-
-    $customer->addresses[] = $addresses;
+    $addresses = $this->addressRepository->findMany('customer_id', '=', $customer["id"]);
+    $customer['addresses'] = $addresses;
 
     return view('customers.edit', compact('customer', 'id'));
   }
@@ -53,23 +60,25 @@ class CustomerController extends BaseController
       $customerValidation = new CreateCustomerValidation($data);
       $validated = $customerValidation->validate();
 
+      DB::beginTransaction();
       $addresses = $validated['address'];
       unset($validated['address']);
 
       $validated['user_id'] = user()->id;
 
-      $customer = new Customer();
-      $customerId = $customer->insertOne($validated);
-
-      $address = new Address();
+      $customerId = $this->customerRepository->insertOne($validated);
 
       foreach ($addresses as $data) {
         $data['customer_id'] = $customerId;
-        $address->insertOne($data);
+        unset($data['id']);
+        $this->addressRepository->insertOne($data);
       }
+
+      DB::commitTransaction();
 
       return redirect('/customers');
     } catch (ValidationException $e) {
+      DB::rollbackTransaction();
       return redirect('/customers/create')->with(['errors' => $e->getErrors()]);
     }
   }
@@ -77,33 +86,35 @@ class CustomerController extends BaseController
   public function update(string $id)
   {
     try {
-      $customerModel = new Customer();
       $data = request()->all();
 
       $customerValidation = new UpdateCustomerValidation($data);
       $validated = $customerValidation->validate();
 
+      DB::beginTransaction();
       $addresses = $validated['address'];
       unset($validated['address']);
 
-      $customerModel->updateOne($id, $validated);
-
-      $addressModel = new Address();
+      $this->customerRepository->update($validated)
+        ->where('id', '=', $id)->andWhere('user_id', '=', user()->id)->execute();
 
       foreach ($addresses as $data) {
         $data['customer_id'] = $id;
 
         if (isset($data['id']) && !empty($data['id']))
-          $addressModel->updateOne($data['id'], $data);
+          $this->addressRepository->updateOne($data['id'], $data);
         else {
           unset($data['id']);
-          $addressModel->insertOne($data);
+          $this->addressRepository->insertOne($data);
         }
       }
+
+      DB::commitTransaction();
 
       return redirect('/customers')
         ->with(['alert' => ['type' => 'success', 'message' => 'Customer updated.']]);
     } catch (ValidationException $e) {
+      DB::rollbackTransaction();
       return redirect("/customers/$id/edit")->with(['errors' => $e->getErrors()]);
     }
   }
@@ -125,10 +136,11 @@ class CustomerController extends BaseController
 
   public function delete(string $id)
   {
-    $customer = new Customer();
+    $this->customerRepository->delete()
+      ->where('id', '=', $id)
+      ->andWhere('user_id', '=', user()->id)->execute();
 
-    $customer->deleteOne($id);
-
-    return redirect('/customers');
+    return redirect('/customers')
+      ->with(['alert' => ['type' => 'success', 'message' => 'Successfully deleted']]);
   }
 }

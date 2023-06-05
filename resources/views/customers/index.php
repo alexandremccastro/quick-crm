@@ -1,3 +1,3 @@
 @parent('layout.admin')
 
-<list-customer customers='<?php echo json_encode($customers) ?>'></list-customer>
+<list-customer pagination='<?php echo json_encode($pagination) ?>'></list-customer>

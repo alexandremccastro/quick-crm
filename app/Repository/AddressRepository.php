@@ -2,15 +2,15 @@
 
 namespace App\Repository;
 
-use App\Models\User;
+use App\Models\Address;
 use Core\Database\Repository;
 
 
-class UserRepository extends Repository
+class AddressRepository extends Repository
 {
   public function __construct()
   {
-    parent::__construct(new User());
+    parent::__construct(new Address());
   }
 
   public function paginate(array $data, $page = 0)

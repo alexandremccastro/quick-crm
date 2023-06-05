@@ -8,7 +8,7 @@ trait Query
 
   protected $params = [];
 
-  private $sql = [
+  protected $sql = [
     'SELECT' => null,
     'INSERT' => null,
     'UPDATE' => null,
@@ -21,6 +21,8 @@ trait Query
 
   public function cleanQuery()
   {
+    $this->params = [];
+
     foreach ($this->sql as $key => $value) {
       if (is_string($value)) $this->sql[$key] = null;
       else if (is_array($value)) $this->sql[$key] = [];

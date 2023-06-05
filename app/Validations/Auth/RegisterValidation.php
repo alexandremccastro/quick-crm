@@ -5,6 +5,7 @@ namespace App\Validations\Auth;
 use App\Models\User;
 use Core\Validation\Rule;
 use Core\Validation\Validation;
+use PDO;
 
 class RegisterValidation extends Validation
 {
@@ -28,7 +29,8 @@ class RegisterValidation extends Validation
   {
     return new Rule('Email already exists', function ($email) {
       $userModel = new User();
-      $found = $userModel->findOne(['email', '=', $email]);
+      $found = $userModel->where('email', '=', $email)
+        ->execute()->fetch(PDO::FETCH_ASSOC);
 
       return $found == null;
     }, true);

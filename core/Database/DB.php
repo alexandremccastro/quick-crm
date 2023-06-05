@@ -2,6 +2,8 @@
 
 namespace Core\Database;
 
+use PDO;
+
 abstract class DB
 {
   private static $instance = null;
@@ -14,7 +16,8 @@ abstract class DB
   public static function db()
   {
     if (self::$instance == null) {
-      self::$instance = new \PDO(self::getDsn(), self::getUser(), self::getPswd());
+      self::$instance = new PDO(self::getDsn(), self::getUser(), self::getPswd());
+      self::$instance->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 
     return self::$instance;
@@ -23,6 +26,11 @@ abstract class DB
   public static function beginTransaction()
   {
     self::db()->beginTransaction();
+  }
+
+  public static function rollbackTransaction()
+  {
+    self::db()->rollBack();
   }
 
   public static function commitTransaction()
