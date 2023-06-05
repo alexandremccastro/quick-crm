@@ -16,8 +16,9 @@ class RegisterValidation extends Validation
   public function rules(): array
   {
     return [
-      'name' => $this->builder()->required()->string()->min(2)->max(100),
-      'email' => $this->builder()->required()->string()->email()->customRule($this->emailMustBeUnique())->max(100),
+      'name' => $this->builder()->required()->string()->min(2)->max(100)->trim(),
+      'email' => $this->builder()->required()->string()
+        ->email()->customRule($this->emailMustBeUnique())->max(100)->trim(),
       'password' => $this->builder()->required()->string()->max(255)->min(4)
     ];
   }

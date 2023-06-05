@@ -16,11 +16,11 @@ class CreateCustomerValidation extends Validation
   public function rules(): array
   {
     return [
-      'name' => $this->builder()->required()->string()->min(2)->max(100),
-      'phone' => $this->builder()->required()->string()->max(20),
-      'cpf' => $this->builder()->required()->string()->length(14)
+      'name' => $this->builder()->required()->string()->min(2)->max(100)->trim(),
+      'phone' => $this->builder()->required()->string()->max(20)->onlyDigits()->trim(),
+      'cpf' => $this->builder()->required()->string()->length(14)->onlyDigits()->trim()
         ->customRule($this->cpfMustBeUnique())->customRule($this->cpfMustBeValid()),
-      'cnpj' => $this->builder()->required()->string()->length(18)
+      'cnpj' => $this->builder()->required()->string()->length(18)->onlyDigits()->trim()
         ->min(11)->customRule($this->cnpjMustBeUnique())->customRule($this->cnpjMustBeValid()),
       'address' => $this->builder()->required()->array()->minCount(1),
       'birth_date' => $this->builder()->required()->date()

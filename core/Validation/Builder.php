@@ -103,6 +103,26 @@ class Builder
     return $this;
   }
 
+  public function trim()
+  {
+    $this->rules[] = new Rule("", function (string &$value) {
+      $value = trim($value);
+      return true;
+    }, true);
+
+    return $this;
+  }
+
+  public function onlyDigits()
+  {
+    $this->rules[] = new Rule("", function (string &$value) {
+      $value = preg_replace('/[^0-9]/is', '', $value);
+      return true;
+    }, true);
+
+    return $this;
+  }
+
   public function customRule(Rule $rule)
   {
     $this->rules[] = $rule;
@@ -110,7 +130,7 @@ class Builder
     return $this;
   }
 
-  public function validate($value)
+  public function validate(&$value)
   {
     $errors = [];
 

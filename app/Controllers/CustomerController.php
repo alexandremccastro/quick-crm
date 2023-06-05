@@ -55,8 +55,6 @@ class CustomerController
       unset($validated['address']);
 
       $validated['user_id'] = user()->id;
-      $validated['cpf'] = preg_replace('/[^0-9]/is', '', $validated['cpf']);
-      $validated['cnpj'] = preg_replace('/[^0-9]/is', '', $validated['cnpj']);
 
       $customer = new Customer();
       $customerId = $customer->insertOne($validated);
@@ -85,9 +83,6 @@ class CustomerController
 
       $addresses = $validated['address'];
       unset($validated['address']);
-
-      $validated['cpf'] = preg_replace('/([\.\-]+)/', '', $validated['cpf']);
-      $validated['cnpj'] = preg_replace('/([\.\-\/]+)/', '', $validated['cnpj']);
 
       $customerModel->updateOne($id, $validated);
 

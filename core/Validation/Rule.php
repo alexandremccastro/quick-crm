@@ -11,10 +11,10 @@ class Rule
   ) {
   }
 
-  public function execute($value)
+  public function execute(&$value)
   {
     if ($this->useCallback) {
-      return call_user_func($this->validator, $value);
+      return call_user_func_array($this->validator, [&$value]);
     } else {
       return filter_var($value, $this->validator);
     }
