@@ -1,7 +1,7 @@
 <template>
   <div class=" w-full">
-    <label class="label m-0 p-0 px-1 mb-1">
-      <span class="label-text">{{ label }}</span>
+    <label class="block mb-2 text-sm font-medium text-gray-900 text-left" :for="name">
+      {{ label }}
     </label>
     <div class="relative max-w-sm">
       <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -12,12 +12,10 @@
             clip-rule="evenodd"></path>
         </svg>
       </div>
-      <input datepicker :datepicker-format="pattern" :type="type" v-maska :data-maska="mask" :name="name"
-        :placeholder="placeholder" v-model="model" type="text"
+      <input :type="type" :name="name" :id="name" :placeholder="placeholder" v-model="model" type="text"
         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         placeholder="Select date">
     </div>
-
 
     <!-- <button class="btn join-item">Teste</button> -->
     <div class="h-6">
@@ -28,6 +26,7 @@
   </div>
 </template>
 <script>
+import Datepicker from 'flowbite-datepicker/Datepicker';
 import { defineComponent } from 'vue';
 
 export default defineComponent({
@@ -69,6 +68,19 @@ export default defineComponent({
       type: String,
       default: 'yyyy-mm-dd'
     },
+  },
+
+  mounted() {
+    const datepickerEl = document.getElementById(this.name)
+
+    new Datepicker(datepickerEl, {
+      format: this.pattern,
+      autohide: true
+    });
+
+    datepickerEl.addEventListener('blur', (e) => {
+      this.model = e.target.value
+    })
   },
 
   computed: {
