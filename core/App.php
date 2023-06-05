@@ -13,6 +13,8 @@ class App
   {
     $this->load();
 
+    date_default_timezone_set(env('TIMEZONE', 'UTC'));
+
     session()->start();
   }
 

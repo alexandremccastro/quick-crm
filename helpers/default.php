@@ -38,12 +38,13 @@ function view(string $path, array $params = [])
  * Gets a key from env file
  * 
  * @param $key The env file param
+ * @param $default Default value if key is empty
  * 
  * @return string The value of the key
  */
-function env(string $key)
+function env(string $key, $default = null)
 {
-  return Parser::get($key);
+  return Parser::get($key) ?? $default;
 }
 
 /**
