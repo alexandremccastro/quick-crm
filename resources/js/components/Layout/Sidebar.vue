@@ -1,14 +1,14 @@
 <template>
   <aside class="h-full sm:hidden lg:block text-gray-100 bg-neutral  min-w-[280px] shadow-2xl">
     <section
-      class="flex shadow-sm h-14 justify-center border-b border-gray-100 border-opacity-20 bg-opacity-20 items-center">
+      class="flex shadow-sm h-14 justify-center border-b border-gray-100 border-opacity-10 bg-opacity-10 items-center">
       <h1 class="text-2xl font-bold"><span class="text-gray-400">Quick</span>CRM</h1>
     </section>
 
 
     <nav class=" p-3">
       <ul>
-        <a href="/home" class="px-3 flex py-2 gap-5  hover:bg-black hover:bg-opacity-20 cursor-pointer rounded">
+        <a href="/home" class="px-3 flex py-2 gap-5  hover:bg-gray-50 hover:bg-opacity-20 cursor-pointer rounded">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
             class="w-6 h-6">
             <path stroke-linecap="round" stroke-linejoin="round"
@@ -18,7 +18,7 @@
           <span>Home</span>
         </a>
 
-        <a href="/customers" class="px-3 flex py-2 gap-5 hover:bg-black hover:bg-opacity-20 cursor-pointer rounded">
+        <a href="/customers" class="px-3 flex py-2 gap-5 hover:bg-gray-50 hover:bg-opacity-10 cursor-pointer rounded">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
             class="w-6 h-6">
             <path stroke-linecap="round" stroke-linejoin="round"
@@ -29,7 +29,7 @@
         </a>
 
         <a href="/customers/favorites"
-          class="px-3 flex py-2 gap-5 hover:bg-black hover:bg-opacity-20 cursor-pointer rounded">
+          class="px-3 flex py-2 gap-5 hover:bg-gray-50 hover:bg-opacity-10 cursor-pointer rounded">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
             class="w-6 h-6">
             <path stroke-linecap="round" stroke-linejoin="round"

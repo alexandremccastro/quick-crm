@@ -21,7 +21,7 @@ export const registerComponents = (app) => {
   app.component('Register', Register)
   app.component('Sidebar', Sidebar)
   app.component('Navbar', Navbar)
-  app.component('Home', Home)
+  app.component('HomePage', Home)
   app.component('CreateCustomer', CreateCustomer)
   app.component('EditCustomer', EditCustomer)
   app.component('ListCustomer', ListCustomer)
