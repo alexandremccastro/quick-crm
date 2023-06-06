@@ -115,9 +115,10 @@ class CustomerController extends BaseController
           $ids[] = $data['id'];
           $this->addressRepository->updateOne($data['id'], $validated);
         } else {
-          $this->addressRepository->insertOne($validated);
+          $ids[] = $this->addressRepository->insertOne($validated);
         }
       }
+
 
       $this->addressRepository->delete()->where('customer_id', '=', $id)->andNotIn('id', $ids)->execute();
 
@@ -155,11 +156,11 @@ class CustomerController extends BaseController
 
     if (!$customer) return view('errors.404');
 
-
     $isFavorite = $customer['is_favorite'] == 1 ? 0 : 1;
 
-
-    $this->customerRepository->update(['is_favorite' =>  $isFavorite])->where('id', '=', $id)->execute();
+    $this->customerRepository
+      ->update(['is_favorite' =>  $isFavorite])
+      ->where('id', '=', $id)->execute();
 
     return redirect('/customers');
   }
