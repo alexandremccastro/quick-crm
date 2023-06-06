@@ -109,17 +109,83 @@ trait Query
     return $this;
   }
 
+  public function orIn($key, $values)
+  {
+    $items = [];
+
+    foreach ($values as $value) {
+      $this->params[] = $value;
+      $items[] = '?';
+    }
+
+    if (!in_array('WHERE', $this->sql['WHERE']))
+      $this->sql['WHERE'][] = 'WHERE';
+    else
+      $this->sql['WHERE'][] = 'OR';
+
+    $params = implode(', ', $items);
+
+    $this->sql['WHERE'][] = "$key IN ($params)";
+    return $this;
+  }
+
+  public function andIn($key, $values)
+  {
+    $items = [];
+
+    foreach ($values as $value) {
+      $this->params[] = $value;
+      $items[] = '?';
+    }
+
+    if (!in_array('WHERE', $this->sql['WHERE']))
+      $this->sql['WHERE'][] = 'WHERE';
+    else
+      $this->sql['WHERE'][] = 'AND';
+
+    $params = implode(', ', $items);
+
+    $this->sql['WHERE'][] = "$key IN ($params)";
+    return $this;
+  }
+
   public function orNotIn($key, $values)
   {
-    $this->params[] = implode(',', $values);
-    $this->sql['WHERE'][] = "OR $key NOT IN (?)";
+    $items = [];
+
+    foreach ($values as $value) {
+      $this->params[] = $value;
+      $items[] = '?';
+    }
+
+    if (!in_array('WHERE', $this->sql['WHERE']))
+      $this->sql['WHERE'][] = 'WHERE';
+    else
+      $this->sql['WHERE'][] = 'OR';
+
+    $params = implode(', ', $items);
+
+    $this->sql['WHERE'][] = "$key NOT IN ($params)";
     return $this;
   }
 
   public function andNotIn($key, $values)
   {
-    $this->params[] = implode(',', $values);
-    $this->sql['WHERE'][] = "AND $key NOT IN (?)";
+    $items = [];
+
+    foreach ($values as $value) {
+      $this->params[] = $value;
+      $items[] = '?';
+    }
+
+    if (!in_array('WHERE', $this->sql['WHERE']))
+      $this->sql['WHERE'][] = 'WHERE';
+    else
+      $this->sql['WHERE'][] = 'AND';
+
+    $params = implode(', ', $items);
+
+    $this->sql['WHERE'][] = "$key NOT IN ($params)";
     return $this;
   }
 

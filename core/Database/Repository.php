@@ -12,7 +12,7 @@ abstract class Repository
 
   public abstract function paginate(array $data, $page = 0);
 
-  public function insertOne(array $data): mixed
+  public function insertOne(array $data): string
   {
     $this->model->insert(array_keys($data))
       ->values($data)->execute();
