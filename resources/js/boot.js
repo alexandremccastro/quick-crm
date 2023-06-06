@@ -14,6 +14,7 @@ import Home from './pages/Home.vue'
 import CreateCustomer from './pages/customers/Create.vue'
 import EditCustomer from './pages/customers/Edit.vue'
 import ListCustomer from './pages/customers/Index.vue'
+import Favorite from './pages/customers/Favorites.vue'
 
 export const registerComponents = (app) => {
   app.component('Login', Login)
@@ -24,6 +25,7 @@ export const registerComponents = (app) => {
   app.component('CreateCustomer', CreateCustomer)
   app.component('EditCustomer', EditCustomer)
   app.component('ListCustomer', ListCustomer)
+  app.component('Favorite', Favorite)
 }
 
 export const registerHelpers = (app) => {

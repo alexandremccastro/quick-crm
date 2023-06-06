@@ -29,6 +29,11 @@ class CustomerRepository extends Repository
         ->orWhere('phone', 'like', "$search%");
     }
 
+    if (isset($data['is_favorite'])) {
+      $is_favorite = $data['is_favorite'];
+      $query->andWhere('is_favorite', '=', $is_favorite);
+    }
+
     $records = $query->offset(($page - 1) * $perPage)->limit($perPage)
       ->execute()->fetchAll(PDO::FETCH_ASSOC);
 

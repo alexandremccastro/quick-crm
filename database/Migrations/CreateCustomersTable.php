@@ -18,6 +18,7 @@ class CreateCustomersTable extends Migration
         cnpj VARCHAR(15) UNIQUE NOT NULL,
         phone VARCHAR(20) NOT NULL,
         birth_date DATE NOT NULL,
+        is_favorite TINYINT DEFAULT 0,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
         FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE

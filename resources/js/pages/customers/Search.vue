@@ -15,12 +15,12 @@
       </div>
     </div>
     <template v-if="showForm">
-      <form autocomplete="off" method="GET" action="/customers" @submit="searchData">
+      <form autocomplete="off" method="GET" :action="action" @submit="searchData">
         <div class="card-body border-b py-0 pt-2 px-4">
           <TextField v-model="v$.search.$model" :errors="v$.search.$errors" class="col-span-2" name="search" />
         </div>
         <div class="card-actions py-3 flex border-b justify-end px-4">
-          <a href="/customers" class="btn  w-[100px]">Clear</a>
+          <a :href="action" class="btn  w-[100px]">Clear</a>
           <button class="btn btn-primary w-[100px]" type="submit">Search</button>
         </div>
       </form>
@@ -36,6 +36,7 @@ import { validations as mockedValidations } from '@/core/validations/mock'
 export default defineComponent({
   name: 'SearchCustomers',
   components: { TextField },
+  props: ['action'],
   validations() {
     const { required } = mockedValidations
 

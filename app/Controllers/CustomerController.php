@@ -2,7 +2,6 @@
 
 namespace App\Controllers;
 
-use App\Models\Customer;
 use App\Repository\AddressRepository;
 use App\Repository\CustomerRepository;
 use App\Validations\Address\AddressValidation;
@@ -139,12 +138,30 @@ class CustomerController extends BaseController
 
   public function favorites()
   {
-    try {
-      $validation = new \App\Validations\Auth\LoginValidation(['email' => 123, 'password' => 12]);
-      $validation->validate();
-    } catch (ValidationException $e) {
-      var_dump($e->getErrors());
-    }
+    $currentPage = request()->get('page') ?? 1;
+    $data = request()->all();
+    $data['is_favorite'] = true;
+
+    $pagination = $this->customerRepository
+      ->paginate($data, $currentPage);
+
+    return view('customers.favorites', compact('pagination'));
+  }
+
+  public function favorite($id)
+  {
+    $customer = $this->customerRepository->where('id', '=', $id)
+      ->andWhere('user_id', '=', user()->id)->execute()->fetch(PDO::FETCH_ASSOC);
+
+    if (!$customer) return view('errors.404');
+
+
+    $isFavorite = $customer['is_favorite'] == 1 ? 0 : 1;
+
+
+    $this->customerRepository->update(['is_favorite' =>  $isFavorite])->where('id', '=', $id)->execute();
+
+    return redirect('/customers');
   }
 
   public function delete(string $id)
