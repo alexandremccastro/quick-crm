@@ -15,9 +15,7 @@ export default defineComponent({
   name: 'EditCustomer',
   components: { Form },
   props: ['customer'],
-  created() {
-    console.log(this.customer)
-  },
+
   computed: {
     parsedData() {
       return JSON.parse(this.customer);

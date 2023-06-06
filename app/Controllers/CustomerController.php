@@ -103,17 +103,24 @@ class CustomerController extends BaseController
       $this->customerRepository->update($validated)
         ->where('id', '=', $id)->andWhere('user_id', '=', user()->id)->execute();
 
+
+      $ids = [];
+
       foreach ($addresses as $data) {
-        $data['customer_id'] = $id;
+
         $validation = new AddressValidation($data);
         $validated = $validation->validate();
+        $validated['customer_id'] = $id;
 
-        if (isset($data['id']) && !empty($data['id']))
+        if (isset($data['id']) && !empty($data['id'])) {
+          $ids[] = $data['id'];
           $this->addressRepository->updateOne($data['id'], $validated);
-        else {
+        } else {
           $this->addressRepository->insertOne($validated);
         }
       }
+
+      $this->addressRepository->delete()->where('customer_id', '=', $id)->andNotIn('id', $ids)->execute();
 
       DB::commitTransaction();
 

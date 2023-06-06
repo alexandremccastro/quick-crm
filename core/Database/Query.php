@@ -109,6 +109,20 @@ trait Query
     return $this;
   }
 
+  public function orNotIn($key, $values)
+  {
+    $this->params[] = implode(',', $values);
+    $this->sql['WHERE'][] = "OR $key NOT IN (?)";
+    return $this;
+  }
+
+  public function andNotIn($key, $values)
+  {
+    $this->params[] = implode(',', $values);
+    $this->sql['WHERE'][] = "AND $key NOT IN (?)";
+    return $this;
+  }
+
   public function offset(int $offset)
   {
     $this->sql['OFFSET'] = "OFFSET $offset";

@@ -4,7 +4,7 @@
   </div>
 
   <div class="card bg-base-100 rounded-lg h-full shadow-sm">
-    <Form action="/customers" method="POST"></Form>
+    <Form action="/customers" method="POST" :data="customer"></Form>
   </div>
 </template>
 <script>
@@ -14,6 +14,21 @@ import Form from './Form.vue';
 export default defineComponent({
   name: 'CreateCustomer',
   components: { Form },
-
+  data() {
+    return {
+      customer: {
+        addresses: [
+          {
+            street: '',
+            number: '',
+            zip_code: '',
+            state: '',
+            city: '',
+            country: ''
+          }
+        ]
+      }
+    }
+  }
 })
 </script>

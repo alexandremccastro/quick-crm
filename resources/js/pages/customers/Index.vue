@@ -37,20 +37,17 @@
 
       <dialog id="deleteCustomerModal" class="modal">
 
-        <form class="modal-box" method="POST" :action="`/customers/${selectedCustomer.id}`">
+        <form class="modal-box" id="deleteCustomerForm" method="POST">
           <input type="hidden" name="method" value="DELETE" />
-          <h3 class="font-bold text-lg">Delete customer</h3>
-          <p class="py-4">If you proceed you can no longer recover the data.</p>
+            <h3 class="font-bold text-lg">Delete customer?</h3>
+            <p class="py-4">If you proceed you can no longer recover the data.</p>
 
-          <div class="modal-action gap-3">
-            <!-- if there is a button, it will close the modal -->
-            <button type="button" onclick="deleteCustomerModal.close()" class="btn ">Cancel</button>
-            <button type="submit" class="btn btn-primary">Proceed</button>
-          </div>
-        </form>
-
-
-
+            <div class="modal-action gap-3">
+              <!-- if there is a button, it will close the modal -->
+              <button type="button" onclick="deleteCustomerModal.close()" class="btn ">Cancel</button>
+              <button type="submit" class="btn btn-primary">Proceed</button>
+            </div>
+          </form>
         </dialog>
     </div>
 

@@ -1,5 +1,8 @@
 <template>
-  <div class="">
+  <fieldset class=" p-2 pt-4 rounded relative w-full mb-5">
+    <legend class="text-lg w-full border-b flex justify-between">Address #{{ index }} <button class="btn btn-xs  "
+        v-if="index !== 1" type="button" @click="remove">Remove</button>
+    </legend>
     <div class="grid grid-cols-12 gap-5">
       <input type="hidden" :name="`address[${index}][id]`" :value="address.id" />
       <TextField label="Street" :name="`address[${index}][street]`" class="col-span-4" type="text"
@@ -10,7 +13,7 @@
     </div>
 
     <div class="grid grid-cols-12 gap-5">
-      <TextField label="Zip Code" :name="`address[${index}][zip_code]`" class="col-span-2" type="text"
+      <TextField label="Zip Code" mask="#####-###" :name="`address[${index}][zip_code]`" class="col-span-2" type="text"
         v-model="v$.address.zip_code.$model" :errors="v$.address.zip_code.$errors" />
 
       <TextField label="City" class="col-span-2" :name="`address[${index}][city]`" type="text"
@@ -23,7 +26,7 @@
         :name="`address[${index}][country]`" class="col-span-2" type="text" v-model="v$.address.country.$model"
         :errors="v$.address.country.$errors" />
     </div>
-  </div>
+  </fieldset>
 </template>
 <script>
 import { defineComponent } from 'vue';
@@ -32,6 +35,7 @@ import SelectField from '@/components/Form/SelectField.vue';
 import { useVuelidate } from '@vuelidate/core'
 import { validations as mockedValidations } from '@/core/validations/mock'
 import { countries } from '@/core/helpers/index'
+import { maxLength } from '@vuelidate/validators';
 
 export default defineComponent({
   name: 'AddressForm',
@@ -62,12 +66,12 @@ export default defineComponent({
 
     return {
       address: {
-        street: { required },
-        number: { required },
-        zip_code: { required },
-        city: { required },
-        state: { required },
-        country: { required }
+        street: { required, maxLenght: maxLength(100) },
+        number: { required, maxLenght: maxLength(20) },
+        zip_code: { required, maxLenght: maxLength(10) },
+        city: { required, maxLenght: maxLength(100) },
+        state: { required, maxLenght: maxLength(100) },
+        country: { required, maxLenght: maxLength(2) }
       }
     }
   },
@@ -76,6 +80,9 @@ export default defineComponent({
       const isValidated = await this.v$.$validate()
 
       if (!isValidated) e.preventDefault()
+    },
+    remove() {
+      this.$emit('remove', this.index - 1)
     }
   }
 })
