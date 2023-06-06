@@ -12,25 +12,27 @@ cp .env.example .env
 
 And than configure your database credentials.
 
-To start this project you need to use docker compose to start the database container.
+## Start with Docker
+
+To start this project you need to use docker compose to start the database and all other services container.
 
 ```sh
 docker compose up -d
 ```
 
-When the database container is up you need to migrate the app database
-
-## Run Composer
-
-Run composer to creates the autload for project files
-
-```sh
-composer install
-```
+After that you can access the app in **localhost** in the port specified in `.env`
 
 ## Commands
 
 This project has a set of commands to helper the developer
+
+### Run Composer
+
+If you are in development mode you can run composer to creates the autload for project files
+
+```sh
+composer install
+```
 
 ### Run Migration
 

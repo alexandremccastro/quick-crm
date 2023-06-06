@@ -7,3 +7,6 @@
 !.env.example
 .phpunit.result.cache
 .phpunit.result.cache
+
+# Logs and log-files
+/logs/
