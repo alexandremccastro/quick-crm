@@ -19,6 +19,10 @@ export default defineComponent({
     totalPages: {
       type: Number,
       required: true
+    },
+    path: {
+      type: String,
+      require: true
     }
   },
   created() {
@@ -40,7 +44,7 @@ export default defineComponent({
   },
   methods: {
     changePage(pageNumber) {
-      window.location.href = `/customers?page=${pageNumber}`
+      window.location.href = `${this.path}?page=${pageNumber}`
     }
   }
 });

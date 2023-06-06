@@ -12,7 +12,8 @@
       </div>
 
       <a href="/customers/create" class="btn btn-primary rounded-full btn-circle absolute bottom-10 right-10 z-50">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+          class="w-6 h-6">
           <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
         </svg>
 
@@ -48,19 +49,19 @@
 
         <form class="modal-box" id="deleteCustomerForm" method="POST">
           <input type="hidden" name="method" value="DELETE" />
-            <h3 class="font-bold text-lg">Delete customer?</h3>
-            <p class="py-4">If you proceed you can no longer recover the data.</p>
+          <h3 class="font-bold text-lg">Delete customer?</h3>
+          <p class="py-4">If you proceed you can no longer recover the data.</p>
 
-            <div class="modal-action gap-3">
-              <!-- if there is a button, it will close the modal -->
-              <button type="button" onclick="deleteCustomerModal.close()" class="btn ">Cancel</button>
-              <button type="submit" class="btn btn-primary">Proceed</button>
-            </div>
-          </form>
-        </dialog>
+          <div class="modal-action gap-3">
+            <!-- if there is a button, it will close the modal -->
+            <button type="button" onclick="deleteCustomerModal.close()" class="btn ">Cancel</button>
+            <button type="submit" class="btn btn-primary">Proceed</button>
+          </div>
+        </form>
+      </dialog>
     </div>
 
-    <Pagination :currentPage="currentPage" :totalPages="totalPages" />
+    <Pagination path="/customers" :currentPage="currentPage" :totalPages="totalPages" />
   </div>
 </template>
 <script>

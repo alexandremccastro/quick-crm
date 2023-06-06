@@ -38,7 +38,7 @@
       </table>
     </div>
 
-    <Pagination :currentPage="currentPage" :totalPages="totalPages" />
+    <Pagination path="/customers/favorites" :currentPage="currentPage" :totalPages="totalPages" />
   </div>
 </template>
 <script>

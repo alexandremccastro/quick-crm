@@ -13,10 +13,17 @@ class CustomerRepository extends Repository
     parent::__construct(new Customer());
   }
 
-  public function paginate(array $data, $page = 1, $perPage = 10)
+  public function paginate(array $data, $page = 1, $perPage = 1)
   {
-    [$result] = $this->select(['COUNT(*) as total'])
-      ->where('user_id', '=', user()->id)->execute()->fetchAll(PDO::FETCH_OBJ);
+    $countQuery = $this->select(['COUNT(*) as total'])
+      ->where('user_id', '=', user()->id);
+
+    if (isset($data['is_favorite'])) {
+      $is_favorite = $data['is_favorite'];
+      $countQuery->andWhere('is_favorite', '=', $is_favorite);
+    }
+
+    $total = $countQuery->execute()->fetchObject()->total;
 
     $query = $this->select()->where('user_id', '=', user()->id);
 
@@ -37,11 +44,13 @@ class CustomerRepository extends Repository
     $records = $query->offset(($page - 1) * $perPage)->limit($perPage)
       ->execute()->fetchAll(PDO::FETCH_ASSOC);
 
+
+
     return [
       'records' => $records,
       'perPage' => $perPage,
       'currentPage' => $page,
-      'totalPages' => round($result->total / $perPage)
+      'totalPages' => round($total / $perPage)
     ];
   }
 }
