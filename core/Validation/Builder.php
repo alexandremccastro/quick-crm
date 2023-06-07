@@ -53,8 +53,8 @@ class Builder
 
   public function minCount(int $min)
   {
-    $this->rules[] = new Rule("Must have at least $min elements", function (array $elements) use ($min) {
-      return count($elements) >= $min;
+    $this->rules[] = new Rule("Must have at least $min elements", function (mixed $elements) use ($min) {
+      return is_array($elements) && count($elements) >= $min;
     }, true);
 
     return $this;

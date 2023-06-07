@@ -81,7 +81,7 @@ class CustomerController extends BaseController
 
       return redirect('/customers');
     } catch (ValidationException $e) {
-      // DB::rollbackTransaction();
+      DB::rollbackTransaction();
       return redirect('/customers/create')->with(['errors' => $e->getErrors()]);
     }
   }
