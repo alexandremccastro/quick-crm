@@ -2,11 +2,20 @@
 
 namespace App\Controllers;
 
+use Core\Http\Response;
+
 abstract class BaseController
 {
-  public function __construct($requesAuth = false)
+  public function __construct(private bool $requiresAuth = false)
   {
-    if ($requesAuth && !isAuthenticated()) redirect('/login');
-    else if (!$requesAuth && isAuthenticated()) redirect('/home');
+  }
+
+  public function preload(): Response | null
+  {
+    if ($this->requiresAuth && !isAuthenticated())
+      return redirect('/login')->with(['alert' => ['type' => 'error', 'message' => 'Permission denied!']]);
+    else if (!$this->requiresAuth && isAuthenticated()) return redirect('/home');
+
+    return null;
   }
 }

@@ -86,6 +86,12 @@ class URI
 
             if ($this->clazz) {
                 $clazz = new $this->clazz();
+
+                $reponse = $clazz->preload();
+
+                if ($reponse instanceof Response)
+                    return $reponse;
+
                 return call_user_func_array([$clazz, $this->method], $params);
             } else {
                 return call_user_func($this->method, $params);
