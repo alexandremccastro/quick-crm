@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Auth;
+namespace Tests\Home;
 
 use App\Repository\UserRepository;
 use Core\App;
