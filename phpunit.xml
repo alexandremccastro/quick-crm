@@ -7,6 +7,9 @@
         <testsuite name="Auth">
             <directory>tests/Auth</directory>
         </testsuite>
+        <testsuite name="Home">
+            <directory>tests/Home</directory>
+        </testsuite>
         <testsuite name="Customers">
             <directory>tests/Customers</directory>
         </testsuite>

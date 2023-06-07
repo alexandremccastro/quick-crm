@@ -9,7 +9,7 @@ final class View
     $content = Loader::render($path, $params);
 
 
-    return response()->setContent($content)
+    return response()->setContent($content)->with($params)
       ->withHeaders(["Content-Type: text/html"]);
   }
 }
