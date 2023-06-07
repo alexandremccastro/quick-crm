@@ -28,11 +28,15 @@ class RegisterValidation extends Validation
   public function emailMustBeUnique(): Rule
   {
     return new Rule('Email already exists', function ($email) {
-      $userModel = new User();
-      $found = $userModel->select()->where('email', '=', $email)
-        ->execute()->fetch(PDO::FETCH_ASSOC);
+      if (!empty($email)) {
+        $userModel = new User();
+        $found = $userModel->select()->where('email', '=', $email)
+          ->execute()->fetch(PDO::FETCH_ASSOC);
 
-      return $found == null;
+        return $found == null;
+      }
+
+      return true;
     }, true);
   }
 }

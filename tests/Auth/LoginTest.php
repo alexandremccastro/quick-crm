@@ -4,15 +4,15 @@ namespace Tests\Auth;
 
 use App\Repository\UserRepository;
 use Core\App;
-use Core\Scripts\Loader;
 use PHPUnit\Framework\TestCase;
 
 final class LoginTest extends TestCase
 {
+  private App $app;
 
   protected function setUp(): void
   {
-    Loader::load(['helpers', 'routes']);
+    $this->app = new App(true);
 
     $userRepository = new UserRepository();
 
@@ -34,10 +34,7 @@ final class LoginTest extends TestCase
    */
   public function emptyCredentialsShouldEmmitAnError()
   {
-    $app = new App(true);
-
-    $response = $app->post('/login', []);
-
+    $response = $this->app->post('/login', []);
 
     $headers = $response->getHeaders();
     $params = $response->getParams();
@@ -51,9 +48,8 @@ final class LoginTest extends TestCase
    */
   public function invalidUserShouldNotLogin()
   {
-    $app = new App(true);
 
-    $response = $app->post('/login', [
+    $response = $this->app->post('/login', [
       'email' => 'invalid@email.com',
       'password' => 'password'
     ]);
@@ -73,9 +69,7 @@ final class LoginTest extends TestCase
    */
   public function validUserShouldSuccessfullyLogin()
   {
-    $app = new App(true);
-
-    $response = $app->post('/login', [
+    $response = $this->app->post('/login', [
       'email' => 'jhondoe@fakemail.com',
       'password' => 'qwe123'
     ]);

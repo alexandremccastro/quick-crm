@@ -4,15 +4,15 @@ namespace Tests\Auth;
 
 use App\Repository\UserRepository;
 use Core\App;
-use Core\Scripts\Loader;
 use PHPUnit\Framework\TestCase;
 
 final class RegisterTest extends TestCase
 {
+  private App $app;
 
   protected function setUp(): void
   {
-    Loader::load(['helpers', 'routes']);
+    $this->app = new App(true);
 
     $userRepository = new UserRepository();
 
@@ -35,9 +35,7 @@ final class RegisterTest extends TestCase
    */
   public function emptyRequestShouldEmmitErrors()
   {
-    $app = new App(true);
-
-    $response = $app->post('/register', []);
+    $response = $this->app->post('/register', []);
 
 
     $headers = $response->getHeaders();
@@ -56,9 +54,7 @@ final class RegisterTest extends TestCase
    */
   public function newUserCantUseRegisteredEmail()
   {
-    $app = new App(true);
-
-    $response = $app->post('/register', [
+    $response = $this->app->post('/register', [
       'name' => 'Jhon Test',
       'email' => 'jhondoe@fakemail.com',
       'password' => 'qwe123'
@@ -80,9 +76,7 @@ final class RegisterTest extends TestCase
    */
   public function validDataShouldRegisterSuccessfully()
   {
-    $app = new App(true);
-
-    $response = $app->post('/register', [
+    $response = $this->app->post('/register', [
       'name' => 'Jhon Test',
       'email' => 'jhondoe@validemail.com',
       'password' => 'qwe123'

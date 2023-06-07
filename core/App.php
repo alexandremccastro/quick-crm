@@ -31,6 +31,8 @@ class App
 
   public function load()
   {
+    if (!defined('BASEPATH')) define('BASEPATH', '.');
+
     Loader::load(['routes', 'helpers']);
   }
 
