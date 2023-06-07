@@ -13,10 +13,12 @@ abstract class Loader
   public static function load(array $folders)
   {
     foreach ($folders as $folder) {
-      $files = scandir($folder);
+
+      $dirPath = implode(DIRECTORY_SEPARATOR, [BASEPATH, $folder]);
+      $files = scandir($dirPath);
 
       foreach ($files as $file) {
-        $filePath = implode('/', [$folder, $file]);
+        $filePath = implode(DIRECTORY_SEPARATOR, [$dirPath, $file]);
 
         if (is_file($filePath)) {
           require_once $filePath;

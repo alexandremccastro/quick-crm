@@ -1,5 +1,7 @@
 <?php
-require_once __DIR__ . '/vendor/autoload.php';
+define('BASEPATH', __DIR__);
+
+require_once BASEPATH . "/vendor/autoload.php";
 
 use Core\App;
 

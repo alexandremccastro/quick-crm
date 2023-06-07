@@ -4,7 +4,7 @@ namespace Core\View;
 
 final class Loader
 {
-  private static string $viewsDir = 'resources/views';
+  private static string $viewsDir = BASEPATH . '/resources/views';
 
   /**
    * Renders a given view

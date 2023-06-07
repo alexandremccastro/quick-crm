@@ -102,7 +102,7 @@ abstract class Route
      */
     public static function serveFile(string $path): Response
     {
-        $filePath = implode(DIRECTORY_SEPARATOR, [server()->getDocumentRoot(), $path]);
+        $filePath = implode(DIRECTORY_SEPARATOR, [BASEPATH, $path]);
 
         if (file_exists($filePath)) {
             $extension = pathinfo($filePath, PATHINFO_EXTENSION);

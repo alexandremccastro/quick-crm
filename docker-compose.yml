@@ -46,9 +46,6 @@ services:
     image: nginx:alpine
     ports:
       - ${APP_PORT}:80
-    expose:
-      - 80
-      - 8000
     networks:
       - quick_crm_network
     volumes:

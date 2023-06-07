@@ -8,8 +8,10 @@ abstract class Parser
 
   public static function parse()
   {
-    if (file_exists('.env'))
-      self::$data = parse_ini_file('.env');
+    $filePath = implode(DIRECTORY_SEPARATOR, [BASEPATH, ".env"]);
+
+    if (file_exists($filePath))
+      self::$data = parse_ini_file($filePath);
   }
 
   public static function get($key)

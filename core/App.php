@@ -54,7 +54,8 @@ class App
       case 'serve':
         $port = env('APP_PORT');
         $host = env('APP_HOST');
-        shell_exec("php -S $host:$port ./index.php");
+
+        shell_exec("php -S $host:$port ./public/index.php");
         break;
       case 'migrate':
         MigrationRunner::execute();
