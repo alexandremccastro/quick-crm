@@ -59,8 +59,9 @@ abstract class Route
      * Attempts to execute a given URI path
      * 
      * @param $path The path that will be loaded
+     * @param $onlyInstance Indicates that the method should returns only the reponse clazz instance
      */
-    public static function dispatch(string $path): Response
+    public static function dispatch(string $path, bool $onlyInstance = false): Response
     {
         $currentMethod = server()->getRequestMethod();
         [$onlyPath,] = explode('?', $path);
@@ -71,16 +72,18 @@ abstract class Route
 
         $uri = current($results);
 
+        $response = null;
+
         if ($uri) {
             $response = $uri->execute($path);
-            return $response->send();
         } else if (self::isPublicPath($path)) {
             $response = self::serveFile($path);
-            return $response->send();
         } else {
-            return view('errors.404')
+            $response = view('errors.404')
                 ->withStatus(HttpStatus::NOT_FOUND)->send();
         }
+
+        return $onlyInstance ? $response : $response->send();
     }
 
     /**

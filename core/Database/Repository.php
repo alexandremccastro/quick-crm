@@ -59,7 +59,7 @@ abstract class Repository
     return $this->model->delete();
   }
 
-  public function select($keys = ['*'])
+  public function select(array $keys = ['*'])
   {
     return $this->model->select($keys);
   }
