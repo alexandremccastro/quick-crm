@@ -24,6 +24,11 @@ class App
     session()->start();
   }
 
+  public function setAuthenticatedUser(array $user)
+  {
+    session()->set('user', (object) $user);
+  }
+
   public function run(string $requestURI)
   {
     Route::dispatch($requestURI);
@@ -42,7 +47,15 @@ class App
     request()->setData($data, Method::POST);
     server()->setRequestMethod('POST');
 
-    return Route::dispatch($uri);
+    return Route::dispatch($uri, true);
+  }
+
+  public function get(string $uri, array $data = []): Response
+  {
+    request()->setData($data, Method::GET);
+    server()->setRequestMethod('GET');
+
+    return Route::dispatch($uri, true);
   }
 
   /**
